@@ -1,8 +1,8 @@
-package com.fiuni.sd.domain.sexo;
+package com.fiuni.sd.domain.estado;
 
 import com.fiuni.sd.domain.base.BaseDomain;
 
-public class SexoDomain extends BaseDomain {
+public class EstadoDomain extends BaseDomain {
 
 	/**
 	 * 
@@ -18,5 +18,4 @@ public class SexoDomain extends BaseDomain {
 	}
 
 	private String _descripcion;
-
 }
