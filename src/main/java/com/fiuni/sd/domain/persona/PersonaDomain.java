@@ -2,20 +2,37 @@ package com.fiuni.sd.domain.persona;
 
 import java.util.List;
 
+import javax.annotation.Generated;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import com.fiuni.sd.domain.base.BaseDomain;
-import com.fiuni.sd.domain.ciudad.CiudadDomain;
+import com.fiuni.sd.domain.ubicacion.ciudad.CiudadDomain;
 import com.fiuni.sd.domain.sexo.SexoDomain;
 import com.fiuni.sd.domain.tipo_persona.TipoPersonaDomain;
 
-public class PersonaDomain extends BaseDomain {
+@Entity
+@Table(name = "persona")
+public class PersonaDomain implements BaseDomain {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-
-
+	
+	public Integer getId() {
+		return _id;
+	}
+	
+	public void setId(Integer id) {
+		this._id = id;
+	}
+	
 	public CiudadDomain getCiudad() {
 		return _ciudad;
 	}
@@ -70,14 +87,34 @@ public class PersonaDomain extends BaseDomain {
 	public void setTipoPersona(List<TipoPersonaDomain> tipoPersona) {
 		this._tipoPersona = tipoPersona;
 	}
-
+	@Column(name="tipoPersona")
 	private List<TipoPersonaDomain> _tipoPersona;
+	
+	@Column(name="sexo")
 	private SexoDomain _sexo;
+	
+	@Column(name="ciudad")
 	private CiudadDomain _ciudad;
+	
+	@Column(name="nombre")
 	private String _nombre;
+	
+	@Column(name="ruc_ci")
 	private String _ruc_ci;
+	
+	@Column(name="email")
 	private String _email;
+	
+	@Column(name="direccion")
 	private String _direccion;
+	
+	@Column(name="telefono")
 	private String _telefono;
-	private int _numero_registro;
+	
+	@Column(name = "numero_registro")
+	private Integer _numero_registro;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false, unique = true)
+	private Integer _id;
 }
