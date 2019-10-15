@@ -1,13 +1,11 @@
 package com.fiuni.sd.domain.persona;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
@@ -32,60 +30,79 @@ public class PersonaDomain implements BaseDomain {
 	public Integer getCiudadId() {
 		return _ciudadId;
 	}
-	public void setCiudadId(Integer ciudadId) {
-		this._ciudadId = ciudadId;
+
+	
+	public void setCiudad(CiudadDomain ciudad) {
+		this._ciudad = ciudad;
 	}
+	
 	public String getNombre() {
 		return _nombre;
 	}
+	
 	public void setNombre(String nombre) {
 		this._nombre = nombre;
 	}
+	
 	public String getRuc_ci() {
 		return _ruc_ci;
 	}
+	
 	public void setRuc_ci(String ruc_ci) {
 		this._ruc_ci = ruc_ci;
 	}
+	
 	public String getEmail() {
 		return _email;
 	}
+	
 	public void setEmail(String email) {
 		this._email = email;
 	}
+	
 	public String getDireccion() {
 		return _direccion;
 	}
+	
 	public void setDireccion(String direccion) {
 		this._direccion = direccion;
 	}
+	
 	public String getTelefono() {
 		return _telefono;
 	}
+	
 	public void setTelefono(String telefono) {
 		this._telefono = telefono;
 	}
+	
 	public int getNumero_registro() {
 		return _numero_registro;
 	}
+	
 	public void setNumero_registro(int numero_registro) {
 		this._numero_registro = numero_registro;
 	}
-	public Integer getSexoId() {
-		return _sexoId;
-	}
-	public void setSexoId(Integer sexoId) {
-		this._sexoId = sexoId;
-	}
-	public List<Integer> getTipoPersonaId() {
-		return _tipoPersonaId;
-	}
-	public void setTipoPersonaId(List<Integer> tipoPersonaId) {
-		this._tipoPersonaId = tipoPersonaId;
-	}
 
-	@OneToMany
-	private List<Integer> _tipoPersonaId;
+	
+	public SexoDomain getSexo() {
+		return _sexo;
+	}
+	
+	public void setSexo(SexoDomain sexo) {
+		this._sexo = sexo;
+	}
+	
+	public TipoPersonaDomain getTipoPersona() {
+		return _tipoPersona;
+	}
+	
+	public void setTipoPersona(TipoPersonaDomain tipoPersona) {
+		this._tipoPersona = tipoPersona;
+	}
+	
+	@Column(name="tipo_persona_id")
+	private TipoPersonaDomain _tipoPersona;
 	
 	@Column(name="sexo", nullable= false)
 	private Integer _sexoId;

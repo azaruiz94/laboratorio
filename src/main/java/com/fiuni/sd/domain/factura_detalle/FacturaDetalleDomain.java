@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
@@ -66,8 +67,9 @@ public class FacturaDetalleDomain implements BaseDomain {
 		_solicitudDetalleId =solicitudDetalleId;
 	}
 
-	@Column(name="factura", nullable = false)
-	private Integer _facturaId;
+
+	@ManyToOne
+	private FacturaDomain _factura;
 	
 	@Column(name="iva")
 	private Integer _ivaId;
