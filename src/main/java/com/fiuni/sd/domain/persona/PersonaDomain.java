@@ -5,12 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
-import com.fiuni.sd.domain.ubicacion.ciudad.CiudadDomain;
-import com.fiuni.sd.domain.sexo.SexoDomain;
-import com.fiuni.sd.domain.tipo_persona.TipoPersonaDomain;
 
 @Entity
 @Table(name = "persona")
@@ -29,9 +27,10 @@ public class PersonaDomain implements BaseDomain {
 		this._id = id;
 	}
 	
-	public CiudadDomain getCiudad() {
-		return _ciudad;
+	public Integer getCiudadId() {
+		return _ciudadId;
 	}
+
 	
 	public void setCiudad(CiudadDomain ciudad) {
 		this._ciudad = ciudad;
@@ -84,6 +83,7 @@ public class PersonaDomain implements BaseDomain {
 	public void setNumero_registro(int numero_registro) {
 		this._numero_registro = numero_registro;
 	}
+
 	
 	public SexoDomain getSexo() {
 		return _sexo;
@@ -104,11 +104,11 @@ public class PersonaDomain implements BaseDomain {
 	@Column(name="tipo_persona_id")
 	private TipoPersonaDomain _tipoPersona;
 	
-	@Column(name="sexo")
-	private SexoDomain _sexo;
+	@Column(name="sexo", nullable= false)
+	private Integer _sexoId;
 	
-	@Column(name="ciudad")
-	private CiudadDomain _ciudad;
+	@Column(name="ciudadId", nullable = false)
+	private Integer _ciudadId;
 	
 	@Column(name="nombre")
 	private String _nombre;
@@ -127,7 +127,7 @@ public class PersonaDomain implements BaseDomain {
 	
 	@Column(name = "numero_registro")
 	private Integer _numero_registro;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false, unique = true)
