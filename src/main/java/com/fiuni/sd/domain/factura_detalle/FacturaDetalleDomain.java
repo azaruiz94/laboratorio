@@ -8,9 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
-import com.fiuni.sd.domain.factura.FacturaDomain;
-import com.fiuni.sd.domain.iva.IvaDomain;
-import com.fiuni.sd.domain.solicitud_detalle.SolicitudDetalleDomain;
 
 @Entity
 @Table(name="facturaDetalle")
@@ -45,38 +42,38 @@ public class FacturaDetalleDomain implements BaseDomain {
 		this._subtotal = subtotal;
 	}
 	
-	public FacturaDomain getFactura() {
-		return _factura;
+	public Integer getFacturaId() {
+		return _facturaId;
 	}
 	
-	public void setFactura(FacturaDomain factura) {
-		this._factura = factura;
+	public void setFacturaId(Integer facturaId) {
+		this._facturaId = facturaId;
 	}
 	
-	public IvaDomain getIva() {
-		return _iva;
+	public Integer getIvaId() {
+		return _ivaId;
 	}
 	
-	public void setIva(IvaDomain iva) {
-		this._iva = iva;
+	public void setIvaId(Integer ivaId) {
+		this._ivaId = ivaId;
 	}
 	
-	public SolicitudDetalleDomain getSolicitudDetalle() {
-		return _solicitudDetalle;
+	public Integer getSolicitudDetalleId() {
+		return _solicitudDetalleId;
 	}
 	
-	public void setSolicitudDetalle(SolicitudDetalleDomain solicitudDetalle) {
-		_solicitudDetalle =solicitudDetalle;
+	public void setSolicitudDetalleId(Integer solicitudDetalleId) {
+		_solicitudDetalleId =solicitudDetalleId;
 	}
 
-	@Column(name="factura")
-	private FacturaDomain _factura;
+	@Column(name="factura", nullable = false)
+	private Integer _facturaId;
 	
 	@Column(name="iva")
-	private IvaDomain _iva;
+	private Integer _ivaId;
 	
 	@Column(name="solicitudDetalle")
-	private SolicitudDetalleDomain _solicitudDetalle;
+	private Integer _solicitudDetalleId;
 	
 	@Column(name="precioUnitario")
 	private double _precioUnitario;

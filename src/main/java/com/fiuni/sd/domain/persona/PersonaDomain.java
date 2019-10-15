@@ -2,19 +2,15 @@ package com.fiuni.sd.domain.persona;
 
 import java.util.List;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
-import com.fiuni.sd.domain.ubicacion.ciudad.CiudadDomain;
-import com.fiuni.sd.domain.sexo.SexoDomain;
-import com.fiuni.sd.domain.tipo_persona.TipoPersonaDomain;
 
 @Entity
 @Table(name = "persona")
@@ -33,11 +29,11 @@ public class PersonaDomain implements BaseDomain {
 		this._id = id;
 	}
 	
-	public CiudadDomain getCiudad() {
-		return _ciudad;
+	public Integer getCiudadId() {
+		return _ciudadId;
 	}
-	public void setCiudad(CiudadDomain ciudad) {
-		this._ciudad = ciudad;
+	public void setCiudadId(Integer ciudadId) {
+		this._ciudadId = ciudadId;
 	}
 	public String getNombre() {
 		return _nombre;
@@ -75,26 +71,27 @@ public class PersonaDomain implements BaseDomain {
 	public void setNumero_registro(int numero_registro) {
 		this._numero_registro = numero_registro;
 	}
-	public SexoDomain getSexo() {
-		return _sexo;
+	public Integer getSexoId() {
+		return _sexoId;
 	}
-	public void setSexo(SexoDomain sexo) {
-		this._sexo = sexo;
+	public void setSexoId(Integer sexoId) {
+		this._sexoId = sexoId;
 	}
-	public List<TipoPersonaDomain> getTipoPersona() {
-		return _tipoPersona;
+	public List<Integer> getTipoPersonaId() {
+		return _tipoPersonaId;
 	}
-	public void setTipoPersona(List<TipoPersonaDomain> tipoPersona) {
-		this._tipoPersona = tipoPersona;
+	public void setTipoPersonaId(List<Integer> tipoPersonaId) {
+		this._tipoPersonaId = tipoPersonaId;
 	}
-	@Column(name="tipoPersona")
-	private List<TipoPersonaDomain> _tipoPersona;
+
+	@OneToMany
+	private List<Integer> _tipoPersonaId;
 	
-	@Column(name="sexo")
-	private SexoDomain _sexo;
+	@Column(name="sexo", nullable= false)
+	private Integer _sexoId;
 	
-	@Column(name="ciudad")
-	private CiudadDomain _ciudad;
+	@Column(name="ciudadId", nullable = false)
+	private Integer _ciudadId;
 	
 	@Column(name="nombre")
 	private String _nombre;
@@ -113,6 +110,7 @@ public class PersonaDomain implements BaseDomain {
 	
 	@Column(name = "numero_registro")
 	private Integer _numero_registro;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false, unique = true)

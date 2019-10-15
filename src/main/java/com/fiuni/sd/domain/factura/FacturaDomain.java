@@ -7,11 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
-import com.fiuni.sd.domain.factura_detalle.FacturaDetalleDomain;
-import com.fiuni.sd.domain.credenciales.usuario.UsuarioDomain;
 
 @Entity
 @Table(name="factura")
@@ -46,35 +45,35 @@ public class FacturaDomain implements BaseDomain {
 		this._total = total;
 	}
 
-	public List<FacturaDetalleDomain> getFacturaDetalles() {
-		return _facturaDetalles;
+	public List<Integer> getFacturaDetalleId() {
+		return _facturaDetalleId;
 	}
 	
-	public void addFacturaDetalle(FacturaDetalleDomain facturaDetalle) {
-		_facturaDetalles.add(facturaDetalle);
+	public void addFacturaDetalleId(Integer facturaDetalleId) {
+		_facturaDetalleId.add(facturaDetalleId);
 	}
 	
-	public void removeFacturaDetalle(FacturaDetalleDomain facturaDetalle) {
-		_facturaDetalles.remove(facturaDetalle);
+	public void removeFacturaDetalleId(Integer facturaDetalleId) {
+		_facturaDetalleId.remove(facturaDetalleId);
 	}
 	
-	public int cantFacturaDetalles() {
-		return _facturaDetalles.size();
+	public int cantFacturaDetalleId() {
+		return _facturaDetalleId.size();
 	}
 
-	public UsuarioDomain getUsuario(){
-		return _usuario;
+	public Integer getUsuarioId(){
+		return _usuarioId;
 	}
 
-	public void setUsuario(UsuarioDomain usuario){
-		this._usuario = usuario;
+	public void setUsuarioId(Integer usuarioId){
+		this._usuarioId = usuarioId;
 	}
 
 	@Column(name="usuario")
-	private UsuarioDomain _usuario;
+	private Integer _usuarioId;
 	
-	@Column(name="facturaDetalle")
-	private List<FacturaDetalleDomain> _facturaDetalles;
+	@OneToMany
+	private List<Integer> _facturaDetalleId;
 	
 	@Column(name="descuento")
 	private double _descuento;
