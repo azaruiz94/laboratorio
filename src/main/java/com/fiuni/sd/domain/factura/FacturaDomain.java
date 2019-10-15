@@ -1,12 +1,14 @@
 package com.fiuni.sd.domain.factura;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
@@ -46,7 +48,7 @@ public class FacturaDomain implements BaseDomain {
 		this._total = total;
 	}
 
-	public List<FacturaDetalleDomain> getFacturaDetalles() {
+	public Set<FacturaDetalleDomain> getFacturaDetalles() {
 		return _facturaDetalles;
 	}
 	
@@ -73,8 +75,8 @@ public class FacturaDomain implements BaseDomain {
 	@Column(name="usuario")
 	private UsuarioDomain _usuario;
 	
-	@Column(name="facturaDetalle")
-	private List<FacturaDetalleDomain> _facturaDetalles;
+	@OneToMany(mappedBy = "_factura")
+	private Set<FacturaDetalleDomain> _facturaDetalles = new HashSet<>();
 	
 	@Column(name="descuento")
 	private double _descuento;

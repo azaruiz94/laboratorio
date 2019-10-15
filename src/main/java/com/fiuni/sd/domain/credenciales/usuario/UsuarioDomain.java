@@ -41,9 +41,9 @@ public class UsuarioDomain implements BaseDomain {
 	@Transient
 	private String _confirmPassword;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	/*@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "rol_usuario", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
-	private Set<RolDomain> _roles;
+	private Set<RolDomain> _roles;*/
 
 	public Integer getId() {
 		return _id;
@@ -93,17 +93,17 @@ public class UsuarioDomain implements BaseDomain {
 		this._confirmPassword = confirmPassword;
 	}
 
-	public Set<RolDomain> getRoles() {
+	/*public Set<RolDomain> getRoles() {
 		return _roles;
 	}
 
 	public void setRoles(Set<RolDomain> roles) {
 		this._roles = roles;
-	}
+	}*/
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + _id + ", nombre=" + _nombre + ", password=" + _password + ", roles=" + _roles + ", personaId=" + _personaId+ ", estadoId=" + _estadoId+ "]";
+		return "Usuario [id=" + _id + ", nombre=" + _nombre + ", password=" + _password  + ", personaId=" + _personaId+ ", estadoId=" + _estadoId+ "]";
 	}
 
 }

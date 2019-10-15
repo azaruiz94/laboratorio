@@ -1,7 +1,5 @@
 package com.fiuni.sd.domain.persona;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,59 +32,77 @@ public class PersonaDomain implements BaseDomain {
 	public CiudadDomain getCiudad() {
 		return _ciudad;
 	}
+	
 	public void setCiudad(CiudadDomain ciudad) {
 		this._ciudad = ciudad;
 	}
+	
 	public String getNombre() {
 		return _nombre;
 	}
+	
 	public void setNombre(String nombre) {
 		this._nombre = nombre;
 	}
+	
 	public String getRuc_ci() {
 		return _ruc_ci;
 	}
+	
 	public void setRuc_ci(String ruc_ci) {
 		this._ruc_ci = ruc_ci;
 	}
+	
 	public String getEmail() {
 		return _email;
 	}
+	
 	public void setEmail(String email) {
 		this._email = email;
 	}
+	
 	public String getDireccion() {
 		return _direccion;
 	}
+	
 	public void setDireccion(String direccion) {
 		this._direccion = direccion;
 	}
+	
 	public String getTelefono() {
 		return _telefono;
 	}
+	
 	public void setTelefono(String telefono) {
 		this._telefono = telefono;
 	}
+	
 	public int getNumero_registro() {
 		return _numero_registro;
 	}
+	
 	public void setNumero_registro(int numero_registro) {
 		this._numero_registro = numero_registro;
 	}
+	
 	public SexoDomain getSexo() {
 		return _sexo;
 	}
+	
 	public void setSexo(SexoDomain sexo) {
 		this._sexo = sexo;
 	}
-	public List<TipoPersonaDomain> getTipoPersona() {
+	
+	public TipoPersonaDomain getTipoPersona() {
 		return _tipoPersona;
 	}
-	public void setTipoPersona(List<TipoPersonaDomain> tipoPersona) {
+	
+	public void setTipoPersona(TipoPersonaDomain tipoPersona) {
 		this._tipoPersona = tipoPersona;
 	}
-	@Column(name="tipoPersona")
-	private List<TipoPersonaDomain> _tipoPersona;
+	
+	@Column(name="tipo_persona_id")
+	private TipoPersonaDomain _tipoPersona;
 	
 	@Column(name="sexo")
 	private SexoDomain _sexo;
@@ -111,6 +127,7 @@ public class PersonaDomain implements BaseDomain {
 	
 	@Column(name = "numero_registro")
 	private Integer _numero_registro;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false, unique = true)
