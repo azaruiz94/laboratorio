@@ -12,6 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
+import com.fiuni.sd.domain.centro_asistencial.CentroAsistencialDomain;
+import com.fiuni.sd.domain.estado.EstadoDomain;
+import com.fiuni.sd.domain.persona.PersonaDomain;
 import com.fiuni.sd.domain.solicitud_detalle.SolicitudDetalleDomain;
 
 @Entity
@@ -28,13 +31,13 @@ public class SolicitudDomain implements BaseDomain {
 	@Column(name = "id", nullable = false, unique = true)
 	private Integer _id;
 	@Column(name = "centro_asistencial_id")
-	private Integer _centroAsistencialID;
+	private CentroAsistencialDomain _centroAsistencial;
 	@Column(name = "estado_id")
-	private Integer _estadoId;
+	private EstadoDomain _estado;
 	@Column(name = "paciente_id")
-	private Integer _pacienteId;
+	private PersonaDomain _paciente;
 	@Column(name = "doctor_id")
-	private Integer _doctorId;
+	private PersonaDomain _doctor;
 	
 	@OneToMany(mappedBy = "_solicitud")
 	private Set<SolicitudDetalleDomain> _solicitudDetalles = new HashSet<>();
@@ -47,36 +50,36 @@ public class SolicitudDomain implements BaseDomain {
 		this._id = id;
 	}
 	
-	public Integer getCentroAsistencialId() {
-		return _centroAsistencialID;
+	public CentroAsistencialDomain getCentroAsistencial() {
+		return _centroAsistencial;
 	}
 	
-	public void setCentroAsistencialId(Integer centroAsistencialId) {
-		_centroAsistencialID= centroAsistencialId;
+	public void setCentroAsistencialId(CentroAsistencialDomain centroAsistencial) {
+		_centroAsistencial= centroAsistencial;
 	}
 	
-	public Integer getEstadoId() {
-		return _estadoId;
+	public EstadoDomain getEstado() {
+		return _estado;
 	}
 	
-	public void setEstadoId(Integer estadoId) {
-		_estadoId= estadoId;
+	public void setEstadoId(EstadoDomain estado) {
+		_estado= estado;
 	}
 	
-	public Integer getPacienteId() {
-		return _pacienteId;
+	public PersonaDomain getPaciente() {
+		return _paciente;
 	}
 	
-	public void setPacienteId(Integer pacienteId) {
-		_estadoId= pacienteId;
+	public void setPacienteId(PersonaDomain paciente) {
+		_paciente= paciente;
 	}
 	
-	public Integer getDoctorId() {
-		return _doctorId;
+	public PersonaDomain getDoctorId() {
+		return _doctor;
 	}
 	
-	public void setDoctorId(Integer doctorId) {
-		_doctorId= doctorId;
+	public void setDoctorId(PersonaDomain doctor) {
+		_doctor= doctor;
 	}
 	
 	public Set<SolicitudDetalleDomain> getDetalles() {

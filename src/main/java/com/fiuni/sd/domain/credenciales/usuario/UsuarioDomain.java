@@ -18,6 +18,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.fiuni.sd.domain.base.BaseDomain;
 import com.fiuni.sd.domain.credenciales.rol.RolDomain;
+import com.fiuni.sd.domain.estado.EstadoDomain;
+import com.fiuni.sd.domain.persona.PersonaDomain;
 
 @Entity
 @Table(name = "usuario")
@@ -32,9 +34,9 @@ public class UsuarioDomain implements BaseDomain {
 	@Column(name= "nombre")
 	private String _nombre;
 	@Column(name= "persona_id")
-	private Integer _personaId;
+	private PersonaDomain _persona;
 	@Column(name= "estado_id")
-	private Integer _estadoId;
+	private EstadoDomain _estado;
 	@Column(name= "contrasena")
 	private String _password;
 	
@@ -61,20 +63,20 @@ public class UsuarioDomain implements BaseDomain {
 		this._nombre = username;
 	}
 	
-	public Integer getPersonaId() {
-		return _personaId;
+	public PersonaDomain getPersonaId() {
+		return _persona;
 	}
 
-	public void setPersonaID(Integer personaId) {
-		this._personaId = personaId;
+	public void setPersonaID(PersonaDomain persona) {
+		this._persona = persona;
 	}
 	
-	public Integer getEstadoId() {
-		return _estadoId;
+	public EstadoDomain getEstadoId() {
+		return _estado;
 	}
 
-	public void setEstadoId(Integer estadoId) {
-		this._estadoId = estadoId;
+	public void setEstadoId(EstadoDomain estado) {
+		this._estado = estado;
 	}
 
 	public String getPassword() {
@@ -103,7 +105,7 @@ public class UsuarioDomain implements BaseDomain {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + _id + ", nombre=" + _nombre + ", password=" + _password  + ", personaId=" + _personaId+ ", estadoId=" + _estadoId+ "]";
+		return "Usuario [id=" + _id + ", nombre=" + _nombre + ", password=" + _password  + ", persona=" + _persona+ ", estadoId=" + _estado+ "]";
 	}
 
 }

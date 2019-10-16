@@ -8,11 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fiuni.sd.domain.analisis.AnalisisDomain;
 import com.fiuni.sd.domain.base.BaseDomain;
+import com.fiuni.sd.domain.credenciales.usuario.UsuarioDomain;
 import com.fiuni.sd.domain.solicitud.SolicitudDomain;
 
 @Entity
-@Table(name="solicitud")
+@Table(name="solicitud_detalle")
 public class SolicitudDetalleDomain implements BaseDomain {
 
 	/**
@@ -28,7 +30,11 @@ public class SolicitudDetalleDomain implements BaseDomain {
 	@ManyToOne
 	private SolicitudDomain _solicitud;
 	@Column(name = "analisis_id")
-	private Integer _analisisId;
+	private AnalisisDomain _analisis;
+	@Column(name = "valor_obtenido")
+	private String _valorObtenido;
+	@Column(name = "bioquimico", nullable = true)
+	private UsuarioDomain _bioquimico;
 	
 	public Integer getId() {
 		return _id;
@@ -46,12 +52,28 @@ public class SolicitudDetalleDomain implements BaseDomain {
 		_solicitud = solicitud;
 	}
 	
-	public Integer getAnalisisId() {
-		return _analisisId;
+	public AnalisisDomain getAnalisis() {
+		return _analisis;
 	}
 	
-	public void setAnalisisId(Integer analisisId) {
-		_analisisId= analisisId;
+	public void setAnalisisId(AnalisisDomain analisis) {
+		_analisis= analisis;
+	}
+	
+	public String getValorObtenido() {
+		return _valorObtenido;
+	}
+	
+	public void setValorObtenido(String valorObtenido) {
+		_valorObtenido= valorObtenido;
+	}
+	
+	public UsuarioDomain getBioquimico() {
+		return _bioquimico;
+	}
+	
+	public void setBioquimico(UsuarioDomain bioquimico) {
+		_bioquimico= bioquimico;
 	}
 
 }

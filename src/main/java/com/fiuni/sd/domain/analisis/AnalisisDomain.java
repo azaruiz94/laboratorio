@@ -8,7 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
-
+import com.fiuni.sd.domain.sexo.SexoDomain;
+import com.fiuni.sd.domain.tipo_analisis.TipoAnalisisDomain;
+import com.fiuni.sd.domain.valor_referencia.ValorReferenciaDomain;
 @Entity
 @Table(name = "analisis")
 public class AnalisisDomain implements BaseDomain {
@@ -25,11 +27,11 @@ public class AnalisisDomain implements BaseDomain {
 	@Column(name = "costo", nullable = false)
 	private Double _costo;
 	@Column(name = "valor_referencia_id", nullable = false)
-	private Integer _valorReferenciaId;
+	private ValorReferenciaDomain _valorReferencia;
 	@Column(name = "tipo_analisis_id", nullable = false)
-	private Integer _tipoAnalisisId;
+	private TipoAnalisisDomain _tipoAnalisis;
 	@Column(name = "sexo_id", nullable = false)
-	private Integer _sexoId;
+	private SexoDomain _sexo;
 
 
 	public Integer getId() {
@@ -56,33 +58,33 @@ public class AnalisisDomain implements BaseDomain {
 		_costo = costo;
 	}
 	
-	public Integer getValorReferenciaId() {
-		return _valorReferenciaId;
+	public ValorReferenciaDomain getValorReferencia() {
+		return _valorReferencia;
 	}
 
-	public void setValorReferenciaId(Integer valorReferenciaId) {
-		_valorReferenciaId = valorReferenciaId;
+	public void setValorReferencia(ValorReferenciaDomain valorReferencia) {
+		_valorReferencia = valorReferencia;
 	}
 	
-	public Integer getTipoAnalisisId() {
-		return _valorReferenciaId;
+	public TipoAnalisisDomain getTipoAnalisisId() {
+		return _tipoAnalisis;
 	}
 
-	public void setTipoAnalisisId(Integer tipoAnalisisId) {
-		_valorReferenciaId = tipoAnalisisId;
+	public void setTipoAnalisisId(TipoAnalisisDomain tipoAnalisis) {
+		_tipoAnalisis = tipoAnalisis;
 	}
 	
-	public Integer getSexoId() {
-		return _sexoId;
+	public SexoDomain getSexoId() {
+		return _sexo;
 	}
 
-	public void setSexoId(Integer sexoId) {
-		_sexoId = sexoId;
+	public void setSexoId(SexoDomain sexo) {
+		_sexo = sexo;
 	}
 
 	@Override
 	public String toString() {
-		return "AnalisisDomain [_id=" + _id + ", _nombre=" + _nombre + ", _valorReferenciaId=" + _valorReferenciaId + ", _tipoAnalisisId=" + _tipoAnalisisId + ", _sexoId=" + _sexoId + "]";
+		return "AnalisisDomain [_id=" + _id + ", _nombre=" + _nombre + ", _valorReferenciaId=" + _valorReferencia + ", _tipoAnalisisId=" + _tipoAnalisis + ", _sexoId=" + _sexo + "]";
 	}
 
 }

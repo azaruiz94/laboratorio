@@ -8,9 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
+import com.fiuni.sd.domain.ubicacion.ciudad.CiudadDomain;
 
 @Entity
-@Table(name = "metrica")
+@Table(name = "centro_asistencial")
 public class CentroAsistencialDomain implements BaseDomain {
 
 	private static final long serialVersionUID = 1L;
@@ -24,7 +25,7 @@ public class CentroAsistencialDomain implements BaseDomain {
 	private String _nombre;
 	
 	@Column(name = "ciudad_id")
-	private Integer _ciudadId;
+	private CiudadDomain _ciudad;
 
 
 	public Integer getId() {
@@ -43,12 +44,12 @@ public class CentroAsistencialDomain implements BaseDomain {
 		_nombre = nombre;
 	}
 	
-	public Integer getCityId() {
-		return _ciudadId;
+	public CiudadDomain getCiudad() {
+		return _ciudad;
 	}
 
-	public void setCityId(Integer ciudadId) {
-		_ciudadId = ciudadId;
+	public void setCiudad(CiudadDomain ciudad) {
+		_ciudad = ciudad;
 	}
 
 	@Override
