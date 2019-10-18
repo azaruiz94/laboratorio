@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
+import com.fiuni.sd.domain.sexo.SexoDomain;
+import com.fiuni.sd.domain.tipo_persona.TipoPersonaDomain;
+import com.fiuni.sd.domain.ubicacion.ciudad.CiudadDomain;
 
 @Entity
 @Table(name = "persona")
@@ -27,13 +30,13 @@ public class PersonaDomain implements BaseDomain {
 		this._id = id;
 	}
 	
-	public Integer getCiudadId() {
+	public CiudadDomain getCiudadId() {
 		return _ciudadId;
 	}
 
 	
 	public void setCiudad(CiudadDomain ciudad) {
-		this._ciudad = ciudad;
+		this._ciudadId = ciudad;
 	}
 	
 	public String getNombre() {
@@ -86,11 +89,11 @@ public class PersonaDomain implements BaseDomain {
 
 	
 	public SexoDomain getSexo() {
-		return _sexo;
+		return _sexoId;
 	}
 	
 	public void setSexo(SexoDomain sexo) {
-		this._sexo = sexo;
+		this._sexoId = sexo;
 	}
 	
 	public TipoPersonaDomain getTipoPersona() {
@@ -105,10 +108,10 @@ public class PersonaDomain implements BaseDomain {
 	private TipoPersonaDomain _tipoPersona;
 	
 	@Column(name="sexo", nullable= false)
-	private Integer _sexoId;
+	private SexoDomain _sexoId;
 	
 	@Column(name="ciudadId", nullable = false)
-	private Integer _ciudadId;
+	private CiudadDomain _ciudadId;
 	
 	@Column(name="nombre")
 	private String _nombre;
