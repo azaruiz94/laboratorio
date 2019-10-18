@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
+import com.fiuni.sd.domain.factura.FacturaDomain;
 
 @Entity
 @Table(name="facturaDetalle")
@@ -43,12 +44,12 @@ public class FacturaDetalleDomain implements BaseDomain {
 		this._subtotal = subtotal;
 	}
 	
-	public Integer getFacturaId() {
-		return _facturaId;
+	public FacturaDomain getFacturaId() {
+		return _factura;
 	}
 	
-	public void setFacturaId(Integer facturaId) {
-		this._facturaId = facturaId;
+	public void setFacturaId(FacturaDomain facturaId) {
+		this._factura = facturaId;
 	}
 	
 	public Integer getIvaId() {

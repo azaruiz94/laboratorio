@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
+import com.fiuni.sd.domain.factura_detalle.FacturaDetalleDomain;
 
 @Entity
 @Table(name="factura")
@@ -51,16 +52,16 @@ public class FacturaDomain implements BaseDomain {
 		return _facturaDetalles;
 	}
 	
-	public void addFacturaDetalleId(Integer facturaDetalleId) {
-		_facturaDetalleId.add(facturaDetalleId);
+	public void addFacturaDetalleId(FacturaDetalleDomain facturaDetalleId) {
+		_facturaDetalles.add(facturaDetalleId);
 	}
 	
-	public void removeFacturaDetalleId(Integer facturaDetalleId) {
-		_facturaDetalleId.remove(facturaDetalleId);
+	public void removeFacturaDetalleId(FacturaDetalleDomain facturaDetalleId) {
+		_facturaDetalles.remove(facturaDetalleId);
 	}
 	
 	public int cantFacturaDetalleId() {
-		return _facturaDetalleId.size();
+		return _facturaDetalles.size();
 	}
 
 	public Integer getUsuarioId(){
@@ -69,6 +70,14 @@ public class FacturaDomain implements BaseDomain {
 
 	public void setUsuarioId(Integer usuarioId){
 		this._usuarioId = usuarioId;
+	}
+
+	public Integer get_nroFactura() {
+		return _nroFactura;
+	}
+
+	public void set_nroFactura(Integer nroFactura) {
+		this._nroFactura = nroFactura;
 	}
 
 	@Column(name="usuario")
@@ -88,5 +97,9 @@ public class FacturaDomain implements BaseDomain {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false, unique = true)
 	private Integer _id;
+	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "nroFactura", nullable = false, unique = true)
+	private Integer _nroFactura;
 
 }

@@ -1,12 +1,12 @@
-package com.fiuni.sd.dto.sexo;
+package com.fiuni.sd.dto.estado;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fiuni.sd.dto.base.BaseDTO;
 
-@XmlRootElement(name="sexo")
-public class SexoDTO extends BaseDTO {
+@XmlRootElement(name="estado")
+public class EstadoDTO extends BaseDTO {
 
 	/**
 	 * 

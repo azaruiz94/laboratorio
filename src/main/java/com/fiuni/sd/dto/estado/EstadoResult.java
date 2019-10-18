@@ -1,4 +1,4 @@
-package com.fiuni.sd.dto.factura_detalle;
+package com.fiuni.sd.dto.estado;
 
 import java.util.List;
 
@@ -7,8 +7,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fiuni.sd.dto.base.BaseResult;
 
-@XmlRootElement(name ="facturaDetalleResult")
-public class FacturaDetalleResult extends BaseResult<FacturaDetalleDTO> {
+
+@XmlRootElement(name ="estadoResult")
+public class EstadoResult extends BaseResult<EstadoDTO>{
 
 	/**
 	 * 
@@ -16,11 +17,12 @@ public class FacturaDetalleResult extends BaseResult<FacturaDetalleDTO> {
 	private static final long serialVersionUID = 1L;
 	
 	@XmlElement
-	public List<FacturaDetalleDTO> getFacturaDetalle(){
+	public List<EstadoDTO> getEstados(){
 		return getList();
 	}
 	
-	public void setFacturaDetalle(List<FacturaDetalleDTO> dtos) {
+	public void setEstados(List<EstadoDTO> dtos) {
 		super.setList(dtos);
 	}
+	
 }
