@@ -17,7 +17,6 @@ import com.fiuni.sd.domain.ubicacion.departamento.DepartamentoDomain;
 @Entity
 @Table(name = "pais")
 public class PaisDomain implements BaseDomain {
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -59,5 +58,4 @@ public class PaisDomain implements BaseDomain {
 	public String toString() {
 		return "PaisDomain [_id=" + _id + ", _nombre=" + _nombre + ", _departamentos=" + _departamentos + "]";
 	}
-
 }
