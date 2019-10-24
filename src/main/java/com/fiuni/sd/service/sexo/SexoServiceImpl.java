@@ -47,6 +47,12 @@ public class SexoServiceImpl extends BaseServiceImpl<SexoDTO, SexoDomain, SexoRe
 	}
 	
 	@Override
+	public SexoDTO delete(SexoDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	protected SexoDTO convertDomainToDto(SexoDomain domain) {
 		final SexoDTO dto = new SexoDTO();
 		dto.setId(domain.get_id());

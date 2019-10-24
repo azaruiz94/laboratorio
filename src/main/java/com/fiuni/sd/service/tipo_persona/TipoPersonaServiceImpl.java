@@ -46,6 +46,12 @@ public class TipoPersonaServiceImpl extends BaseServiceImpl<TipoPersonaDTO, Tipo
 	}
 	
 	@Override
+	public TipoPersonaDTO delete(TipoPersonaDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	protected TipoPersonaDTO convertDomainToDto(TipoPersonaDomain domain) {
 		final TipoPersonaDTO dto = new TipoPersonaDTO();
 		dto.setId(domain.get_id());

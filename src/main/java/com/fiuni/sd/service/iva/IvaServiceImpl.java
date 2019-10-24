@@ -47,6 +47,12 @@ public class IvaServiceImpl extends BaseServiceImpl<IvaDTO, IvaDomain, IvaResult
 	}
 	
 	@Override
+	public IvaDTO delete(IvaDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	protected IvaDTO convertDomainToDto(IvaDomain domain) {
 		final IvaDTO dto = new IvaDTO();
 		dto.setId(domain.get_id());
