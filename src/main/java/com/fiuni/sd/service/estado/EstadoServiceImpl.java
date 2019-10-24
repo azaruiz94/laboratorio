@@ -45,7 +45,7 @@ public class EstadoServiceImpl extends BaseServiceImpl<EstadoDTO, EstadoDomain, 
 		estadoResult.setEstados(estados);
 		return estadoResult;
 	}
-
+	
 	@Override
 	protected EstadoDTO convertDomainToDto(EstadoDomain domain) {
 		final EstadoDTO dto = new EstadoDTO();

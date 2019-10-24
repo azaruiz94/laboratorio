@@ -20,16 +20,20 @@ import com.fiuni.sd.utils.Configuracion;
 @RequestMapping("/estados")
 public class EstadoResource {
 	
+	//buscar por id
 	@GetMapping("/{id}")
 	public EstadoDTO getById(@PathVariable(value = "id") Integer estadoId) {
 		return estadoService.getById(estadoId);
 	}
 	
+	//Read
 	@GetMapping(path = "/pag/{pag_num}")
 	public EstadoResult getEstados(@PathVariable(value = "pag_num")Integer pagNum) {
-		return estadoService.getAll(PageRequest.of((pagNum-1), Configuracion.PAGE_SIZE));
+		return estadoService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
 	}
 	
+	
+	//create
 	@PostMapping()
 	public EstadoDTO save(@Valid @RequestBody EstadoDTO estado) {
 		return estadoService.save(estado);
