@@ -5,7 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
@@ -31,12 +32,12 @@ public class PersonaDomain implements BaseDomain {
 	}
 	
 	public CiudadDomain getCiudadId() {
-		return _ciudadId;
+		return _ciudad;
 	}
 
 	
 	public void setCiudad(CiudadDomain ciudad) {
-		this._ciudadId = ciudad;
+		this._ciudad = ciudad;
 	}
 	
 	public String getNombre() {
@@ -89,11 +90,11 @@ public class PersonaDomain implements BaseDomain {
 
 	
 	public SexoDomain getSexo() {
-		return _sexoId;
+		return _sexo;
 	}
 	
 	public void setSexo(SexoDomain sexo) {
-		this._sexoId = sexo;
+		this._sexo = sexo;
 	}
 	
 	public TipoPersonaDomain getTipoPersona() {
@@ -104,14 +105,14 @@ public class PersonaDomain implements BaseDomain {
 		this._tipoPersona = tipoPersona;
 	}
 	
-	@Column(name="tipo_persona_id")
+	@ManyToOne
 	private TipoPersonaDomain _tipoPersona;
 	
-	@Column(name="sexo", nullable= false)
-	private SexoDomain _sexoId;
+	@OneToOne
+	private SexoDomain _sexo;
 	
-	@Column(name="ciudadId", nullable = false)
-	private CiudadDomain _ciudadId;
+	@OneToOne
+	private CiudadDomain _ciudad;
 	
 	@Column(name="nombre")
 	private String _nombre;

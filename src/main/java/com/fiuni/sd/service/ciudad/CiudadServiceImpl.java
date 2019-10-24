@@ -54,13 +54,13 @@ public class CiudadServiceImpl extends BaseServiceImpl<CiudadDTO, CiudadDomain, 
 		domain.setNombre(dto.getNombre());
 		return domain;
 	}
-
+	
 	@Override
 	public CiudadDTO delete(CiudadDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public CiudadResult getAll(org.springframework.data.domain.Pageable pageable) {
 		final List<CiudadDTO> ciudades = new ArrayList<>();

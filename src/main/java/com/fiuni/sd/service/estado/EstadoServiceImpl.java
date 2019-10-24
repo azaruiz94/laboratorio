@@ -47,6 +47,12 @@ public class EstadoServiceImpl extends BaseServiceImpl<EstadoDTO, EstadoDomain, 
 	}
 	
 	@Override
+	public EstadoDTO delete(EstadoDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	protected EstadoDTO convertDomainToDto(EstadoDomain domain) {
 		final EstadoDTO dto = new EstadoDTO();
 		dto.setId(domain.get_id());
@@ -65,10 +71,5 @@ public class EstadoServiceImpl extends BaseServiceImpl<EstadoDTO, EstadoDomain, 
 	@Autowired
 	private IEstadoDao estadoDao;
 
-	@Override
-	public EstadoDTO delete(EstadoDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }

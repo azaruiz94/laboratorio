@@ -54,13 +54,12 @@ public class DepartamentoServiceImpl extends BaseServiceImpl<DepartamentoDTO, De
 		return domain;
 	}
 
-
 	@Override
 	public DepartamentoDTO delete(DepartamentoDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public DepartamentoResult getAll(Pageable pageable) {
 		final List<DepartamentoDTO> departamentos = new ArrayList<>();
