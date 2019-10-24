@@ -72,5 +72,4 @@ public class EstadoServiceImpl extends BaseServiceImpl<EstadoDTO, EstadoDomain, 
 	private IEstadoDao estadoDao;
 
 	
-	
 }

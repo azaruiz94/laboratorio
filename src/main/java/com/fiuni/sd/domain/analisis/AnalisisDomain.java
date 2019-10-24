@@ -5,12 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
 import com.fiuni.sd.domain.sexo.SexoDomain;
 import com.fiuni.sd.domain.tipo_analisis.TipoAnalisisDomain;
 import com.fiuni.sd.domain.valor_referencia.ValorReferenciaDomain;
+
 @Entity
 @Table(name = "analisis")
 public class AnalisisDomain implements BaseDomain {
@@ -26,14 +28,14 @@ public class AnalisisDomain implements BaseDomain {
 	private String _nombre;
 	@Column(name = "costo", nullable = false)
 	private Double _costo;
-	@Column(name = "valor_referencia_id", nullable = false)
-	private ValorReferenciaDomain _valorReferencia;
 	@Column(name = "tipo_analisis_id", nullable = false)
 	private TipoAnalisisDomain _tipoAnalisis;
 	@Column(name = "sexo_id", nullable = false)
 	private SexoDomain _sexo;
 
-
+	@ManyToOne
+	private ValorReferenciaDomain _valorReferencia;
+	
 	public Integer getId() {
 		return _id;
 	}
