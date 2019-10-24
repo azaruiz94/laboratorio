@@ -64,5 +64,11 @@ public class IvaServiceImpl extends BaseServiceImpl<IvaDTO, IvaDomain, IvaResult
 
 	@Autowired
 	private IIvaDao ivaDao;
+
+	@Override
+	public IvaDTO delete(IvaDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

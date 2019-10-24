@@ -1,0 +1,72 @@
+package com.fiuni.sd.service.tipo_analisis;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fiuni.sd.dao.tipo_analisis.ITipoAnalisisDao;
+import com.fiuni.sd.domain.tipo_analisis.TipoAnalisisDomain;
+import com.fiuni.sd.dto.tipo_analisis.TipoAnalisisDTO;
+import com.fiuni.sd.dto.tipo_analisis.TipoAnalisisResult;
+import com.fiuni.sd.service.base.BaseServiceImpl;
+
+@Service
+public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, TipoAnalisisDomain, TipoAnalisisResult> implements ITipoAnalisisService {
+
+	@Override
+	@Transactional
+	public TipoAnalisisDTO save(TipoAnalisisDTO dto) {
+		final TipoAnalisisDomain domain = convertDtoToDomain(dto);
+		final TipoAnalisisDomain estadoDomain = tipoAnalisisDao.save(domain);
+		return convertDomainToDto(estadoDomain);
+	}
+
+	@Override
+	@Transactional
+	public TipoAnalisisDTO getById(Integer id) {
+		final TipoAnalisisDomain domain = tipoAnalisisDao.findById(id).get();
+		return convertDomainToDto(domain);
+	}
+
+	@Override
+	public TipoAnalisisResult getAll(Pageable pageable) {
+		final List<TipoAnalisisDTO> tipos_analisis = new ArrayList<>();
+		Page<TipoAnalisisDomain> resultados = tipoAnalisisDao.findAll(pageable);
+		resultados.forEach(e -> tipos_analisis.add(convertDomainToDto(e)));
+		
+		TipoAnalisisResult tipoAnalisisResult = new TipoAnalisisResult();
+		tipoAnalisisResult.setTiposAnalisis(tipos_analisis);
+		return tipoAnalisisResult;
+	}
+	
+	@Override
+	protected TipoAnalisisDTO convertDomainToDto(TipoAnalisisDomain domain) {
+		final TipoAnalisisDTO dto = new TipoAnalisisDTO();
+		dto.setId(domain.getId());
+		dto.setNombre(domain.getNombre());
+		return dto;
+	}
+
+	@Override
+	protected TipoAnalisisDomain convertDtoToDomain(TipoAnalisisDTO dto) {
+		final TipoAnalisisDomain domain = new TipoAnalisisDomain();
+		domain.setId(dto.getId());
+		domain.setNombre(dto.getNombre());
+		return domain;
+	}
+
+	@Autowired
+	private ITipoAnalisisDao tipoAnalisisDao;
+
+	@Override
+	public TipoAnalisisDTO delete(TipoAnalisisDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}

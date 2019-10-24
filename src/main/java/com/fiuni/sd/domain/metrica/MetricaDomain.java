@@ -32,7 +32,7 @@ public class MetricaDomain implements BaseDomain {
 		_id = id;
 	}
 
-	public String getunidadMedida() {
+	public String getUnidadMedida() {
 		return _unidadMedida;
 	}
 
