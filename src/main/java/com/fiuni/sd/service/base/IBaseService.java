@@ -7,6 +7,9 @@ import org.springframework.data.domain.Pageable;
 import com.fiuni.sd.dto.base.BaseDTO;
 
 public interface IBaseService <DTO extends BaseDTO, R extends BaseResult<DTO>>{
+	
+	public DTO delete(DTO dto);
+	
 	public DTO save(DTO dto);
 
 	public DTO getById(Integer id);
