@@ -2,7 +2,7 @@ package com.fiuni.sd.service.base;
 
 import com.fiuni.sd.dto.base.BaseResult;
 
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 
 import com.fiuni.sd.dto.base.BaseDTO;
 
