@@ -11,34 +11,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fiuni.sd.dto.iva.IvaDTO;
-import com.fiuni.sd.dto.iva.IvaResult;
-import com.fiuni.sd.service.iva.IIvaService;
+import com.fiuni.sd.dto.tipo_persona.TipoPersonaDTO;
+import com.fiuni.sd.dto.tipo_persona.TipoPersonaResult;
+import com.fiuni.sd.service.tipo_persona.ITipoPersonaService;
 import com.fiuni.sd.utils.Configuracion;
 
+
 @RestController
-@RequestMapping("/ivas")
-public class IvaResource {
+@RequestMapping("/tipoPersonas")
+public class TipoPersonaResource {
 	
 	//buscar por id
 	@GetMapping("/{id}")
-	public IvaDTO getById(@PathVariable(value = "id") Integer ivaId) {
-		return ivaService.getById(ivaId);
+	public TipoPersonaDTO getById(@PathVariable(value = "id") Integer tipoPersonaId) {
+		return tipoPersonaService.getById(tipoPersonaId);
 	}
 	
 	//Read
 	@GetMapping(path = "/pag/{pag_num}")
-	public IvaResult getEstados(@PathVariable(value = "pag_num")Integer pagNum) {
-		return ivaService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+	public TipoPersonaResult getSexos(@PathVariable(value = "pag_num")Integer pagNum) {
+		return tipoPersonaService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
 	}
 	
 	
 	//create
 	@PostMapping()
-	public IvaDTO save(@Valid @RequestBody IvaDTO iva) {
-		return ivaService.save(iva);
+	public TipoPersonaDTO save(@Valid @RequestBody TipoPersonaDTO tipoPersona) {
+		return tipoPersonaService.save(tipoPersona);
 	}
 	
 	@Autowired
-	private IIvaService ivaService;
+	private ITipoPersonaService tipoPersonaService;
 }

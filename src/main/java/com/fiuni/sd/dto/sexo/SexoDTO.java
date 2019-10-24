@@ -1,11 +1,7 @@
 package com.fiuni.sd.dto.sexo;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.fiuni.sd.dto.base.BaseDTO;
 
-@XmlRootElement(name="sexo")
 public class SexoDTO extends BaseDTO {
 
 	/**
@@ -13,7 +9,6 @@ public class SexoDTO extends BaseDTO {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@XmlElement
 	public String getDescripcion() {
 		return _descripcion;
 	}
