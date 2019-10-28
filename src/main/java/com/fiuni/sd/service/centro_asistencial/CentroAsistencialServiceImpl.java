@@ -65,7 +65,13 @@ public class CentroAsistencialServiceImpl extends BaseServiceImpl<CentroAsistenc
 	private ICentroAsistencialDao _tipoAnalisisDao;
 
 	@Override
-	public CentroAsistencialDTO delete(CentroAsistencialDTO dto) {
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public CentroAsistencialDTO update(Integer id, CentroAsistencialDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -3,10 +3,9 @@ package com.fiuni.sd.dao.usuario;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.fiuni.sd.domain.estado.EstadoDomain;
-
+import com.fiuni.sd.domain.credenciales.usuario.UsuarioDomain;
 
 @Repository
-public interface IUsuarioDao extends PagingAndSortingRepository<EstadoDomain, Integer>{
+public interface IUsuarioDao extends PagingAndSortingRepository<UsuarioDomain, Integer>{
 	
 }

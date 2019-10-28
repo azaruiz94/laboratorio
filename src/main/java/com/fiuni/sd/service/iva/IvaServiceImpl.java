@@ -77,5 +77,4 @@ public class IvaServiceImpl extends BaseServiceImpl<IvaDTO, IvaDomain, IvaResult
 
 	@Autowired
 	private IIvaDao ivaDao;
-	
 }

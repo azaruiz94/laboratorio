@@ -54,7 +54,7 @@ public class SolicitudDomain implements BaseDomain {
 		return _centroAsistencial;
 	}
 	
-	public void setCentroAsistencialId(CentroAsistencialDomain centroAsistencial) {
+	public void setCentroAsistencial(CentroAsistencialDomain centroAsistencial) {
 		_centroAsistencial= centroAsistencial;
 	}
 	
@@ -62,7 +62,7 @@ public class SolicitudDomain implements BaseDomain {
 		return _estado;
 	}
 	
-	public void setEstadoId(EstadoDomain estado) {
+	public void setEstado(EstadoDomain estado) {
 		_estado= estado;
 	}
 	
@@ -70,15 +70,15 @@ public class SolicitudDomain implements BaseDomain {
 		return _paciente;
 	}
 	
-	public void setPacienteId(PersonaDomain paciente) {
+	public void setPaciente(PersonaDomain paciente) {
 		_paciente= paciente;
 	}
 	
-	public PersonaDomain getDoctorId() {
+	public PersonaDomain getDoctor() {
 		return _doctor;
 	}
 	
-	public void setDoctorId(PersonaDomain doctor) {
+	public void setDoctor(PersonaDomain doctor) {
 		_doctor= doctor;
 	}
 	

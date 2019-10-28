@@ -53,12 +53,18 @@ public class DepartamentoServiceImpl extends BaseServiceImpl<DepartamentoDTO, De
 		domain.setNombre(dto.getNombre());
 		return domain;
 	}
-
-	@Override
-	public DepartamentoDTO delete(DepartamentoDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+	/*
+	 
+	 @Override
+	protected StateDomain convertDtoToDomain(StateDTO dto) {
+		final StateDomain domain = new StateDomain();
+		domain.setId(dto.getId());
+		domain.setCountry(countryDao.findById(dto.getCountryId()).get());
+		domain.setName(dto.getName());
+		return domain;
 	}
+
+	  */
 	
 	@Override
 	public DepartamentoResult getAll(Pageable pageable) {
@@ -68,5 +74,17 @@ public class DepartamentoServiceImpl extends BaseServiceImpl<DepartamentoDTO, De
 		DepartamentoResult departamentoResult = new DepartamentoResult();
 		departamentoResult.setDepartamentos(departamentos);
 		return departamentoResult;
+	}
+
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public DepartamentoDTO update(Integer id, DepartamentoDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

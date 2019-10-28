@@ -42,7 +42,7 @@ public class TipoAnalisisDomain implements BaseDomain {
 
 	@Override
 	public String toString() {
-		return "TipoAnalisisDomain [_id=" + _id + ", _nombre=" + _nombre + ", _states="  + "]";
+		return "TipoAnalisisDomain [id=" + _id + ", nombre=" + _nombre + "]";
 	}
 
 }
