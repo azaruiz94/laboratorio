@@ -11,33 +11,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fiuni.sd.dto.usuario.UsuarioDTO;
-import com.fiuni.sd.dto.usuario.UsuarioResult;
-import com.fiuni.sd.service.usuario.IUsuarioService;
+import com.fiuni.sd.dto.solicitud.SolicitudDTO;
+import com.fiuni.sd.dto.solicitud.SolicitudResult;
+import com.fiuni.sd.service.solicitud.ISolicitudService;
 import com.fiuni.sd.utils.Configuracion;
 
 @RestController
-@RequestMapping("/usuarios")
-public class UsuarioResource {
+@RequestMapping("/solicitudes")
+public class SolicitudResource {
 	
 	//buscar por id
 	@GetMapping("/{id}")
-	public UsuarioDTO getById(@PathVariable(value = "id") Integer usuarioId) {
-		return usuarioService.getById(usuarioId);
+	public SolicitudDTO getById(@PathVariable(value = "id") Integer solicitudId) {
+		return solicitudService.getById(solicitudId);
 	}
 	
 	//Read
 	@GetMapping(path = "/pag/{pag_num}")
-	public UsuarioResult getSolicitudes(@PathVariable(value = "pag_num")Integer pagNum) {
-		return usuarioService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+	public SolicitudResult getSolicitudes(@PathVariable(value = "pag_num")Integer pagNum) {
+		return solicitudService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
 	}
 	
 	//create
 	@PostMapping()
-	public UsuarioDTO save(@Valid @RequestBody UsuarioDTO usuario) {
-		return usuarioService.save(usuario);
+	public SolicitudDTO save(@Valid @RequestBody SolicitudDTO solicitud) {
+		return solicitudService.save(solicitud);
 	}
 	
 	@Autowired
-	private IUsuarioService usuarioService;
+	private ISolicitudService solicitudService;
 }

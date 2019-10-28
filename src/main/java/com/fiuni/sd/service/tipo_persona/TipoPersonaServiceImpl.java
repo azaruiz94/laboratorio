@@ -69,11 +69,5 @@ public class TipoPersonaServiceImpl extends BaseServiceImpl<TipoPersonaDTO, Tipo
 
 	@Autowired
 	private ITipoPersonaDao tipoPersonaDao;
-
-	@Override
-	public TipoPersonaDTO delete(TipoPersonaDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }

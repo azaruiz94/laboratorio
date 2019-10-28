@@ -1,5 +1,7 @@
 package com.fiuni.sd.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +15,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fiuni.sd.dto.tipo_analisis.TipoAnalisisDTO;
 import com.fiuni.sd.dto.tipo_analisis.TipoAnalisisResult;
+import com.fiuni.sd.exceptions.tipo_analisis.TipoAnalisisNotFoundException;
 import com.fiuni.sd.service.tipo_analisis.ITipoAnalisisService;
 import com.fiuni.sd.utils.Configuracion;
 
 @RestController
-@RequestMapping("/tipos_analisis")
+@RequestMapping("/tipos-analisis")
 public class TipoAnalisisResource {
 	
 	//buscar por id
 	@GetMapping("/{id}")
 	public TipoAnalisisDTO getById(@PathVariable(value = "id") Integer tipoAnalisisId) {
-		return tipoAnalisisService.getById(tipoAnalisisId);
+		Optional<TipoAnalisisDTO> resultado= Optional.ofNullable(tipoAnalisisService.getById(tipoAnalisisId));
+		if(resultado.get().equals(null)) {
+			System.out.println("entrado en if...");
+			return resultado.get();
+		}else {
+			return resultado.orElseThrow(() -> new TipoAnalisisNotFoundException(tipoAnalisisId));
+		}
 	}
 	
 	//Read

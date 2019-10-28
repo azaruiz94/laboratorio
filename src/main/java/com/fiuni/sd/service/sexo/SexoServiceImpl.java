@@ -70,11 +70,5 @@ public class SexoServiceImpl extends BaseServiceImpl<SexoDTO, SexoDomain, SexoRe
 
 	@Autowired
 	private ISexoDao sexoDao;
-
-	@Override
-	public SexoDTO delete(SexoDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }

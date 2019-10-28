@@ -53,6 +53,18 @@ public class DepartamentoServiceImpl extends BaseServiceImpl<DepartamentoDTO, De
 		domain.setNombre(dto.getNombre());
 		return domain;
 	}
+	/*
+	 
+	 @Override
+	protected StateDomain convertDtoToDomain(StateDTO dto) {
+		final StateDomain domain = new StateDomain();
+		domain.setId(dto.getId());
+		domain.setCountry(countryDao.findById(dto.getCountryId()).get());
+		domain.setName(dto.getName());
+		return domain;
+	}
+
+	  */
 
 	@Override
 	public DepartamentoDTO delete(DepartamentoDTO dto) {

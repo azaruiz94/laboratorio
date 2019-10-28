@@ -2,6 +2,7 @@ package com.fiuni.sd.service.tipo_analisis;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,15 +23,17 @@ public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, Ti
 	@Transactional
 	public TipoAnalisisDTO save(TipoAnalisisDTO dto) {
 		final TipoAnalisisDomain domain = convertDtoToDomain(dto);
-		final TipoAnalisisDomain estadoDomain = tipoAnalisisDao.save(domain);
-		return convertDomainToDto(estadoDomain);
+		final TipoAnalisisDomain tipoAnalisisDomain = tipoAnalisisDao.save(domain);
+		return convertDomainToDto(tipoAnalisisDomain);
 	}
 
 	@Override
 	@Transactional
 	public TipoAnalisisDTO getById(Integer id) {
-		final TipoAnalisisDomain domain = tipoAnalisisDao.findById(id).get();
-		return convertDomainToDto(domain);
+		//final TipoAnalisisDomain domain = tipoAnalisisDao.findById(id).get();
+		TipoAnalisisDomain resultado= tipoAnalisisDao.findById(id).isPresent() ? tipoAnalisisDao.findById(id).get() : null;
+		//return convertDomainToDto(domain);
+		return convertDomainToDto(resultado);
 	}
 
 	@Override
@@ -47,8 +50,12 @@ public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, Ti
 	@Override
 	protected TipoAnalisisDTO convertDomainToDto(TipoAnalisisDomain domain) {
 		final TipoAnalisisDTO dto = new TipoAnalisisDTO();
-		dto.setId(domain.getId());
-		dto.setNombre(domain.getNombre());
+		Optional<TipoAnalisisDomain> resultado= Optional.ofNullable(domain);
+		if(resultado.isPresent()) {
+			dto.setId(resultado.get().getId());
+			dto.setNombre(resultado.get().getNombre());
+			
+		}
 		return dto;
 	}
 
@@ -60,13 +67,12 @@ public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, Ti
 		return domain;
 	}
 
-	@Autowired
-	private ITipoAnalisisDao tipoAnalisisDao;
-
 	@Override
 	public TipoAnalisisDTO delete(TipoAnalisisDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
+	@Autowired
+	private ITipoAnalisisDao tipoAnalisisDao;
 }
