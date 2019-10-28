@@ -47,9 +47,16 @@ public class EstadoServiceImpl extends BaseServiceImpl<EstadoDTO, EstadoDomain, 
 	}
 	
 	@Override
-	public EstadoDTO delete(EstadoDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(Integer id) {
+		estadoDao.deleteById(id);
+	}
+	
+	public EstadoDTO update(Integer id, EstadoDTO dto) {
+		EstadoDomain domain = estadoDao.findById(id).get();
+		domain.set_id(dto.getId());
+		domain.setDescripcion(dto.getDescripcion());
+		EstadoDomain estadoActualizado = estadoDao.save(domain);
+		return convertDomainToDto(estadoActualizado);
 	}
 	
 	@Override
