@@ -4,9 +4,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +40,19 @@ public class TipoPersonaResource {
 	@PostMapping()
 	public TipoPersonaDTO save(@Valid @RequestBody TipoPersonaDTO tipoPersona) {
 		return tipoPersonaService.save(tipoPersona);
+	}
+	
+
+	//actualizar
+	@PutMapping("/{id}/editar")
+	public void updateById(@PathVariable(value = "id") Integer tipoPersonaId,@RequestBody TipoPersonaDTO dto) {
+		tipoPersonaService.update(tipoPersonaId, dto);
+	}
+	
+	//borrar
+	@DeleteMapping("/{id}/borrar")
+	public void deleteTipoPersonaById(@PathVariable(value = "id") Integer tipoPersonaId) {
+		tipoPersonaService.delete(tipoPersonaId);
 	}
 	
 	@Autowired
