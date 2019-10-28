@@ -65,12 +65,6 @@ public class DepartamentoServiceImpl extends BaseServiceImpl<DepartamentoDTO, De
 	}
 
 	  */
-
-	@Override
-	public DepartamentoDTO delete(DepartamentoDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	@Override
 	public DepartamentoResult getAll(Pageable pageable) {
@@ -80,5 +74,17 @@ public class DepartamentoServiceImpl extends BaseServiceImpl<DepartamentoDTO, De
 		DepartamentoResult departamentoResult = new DepartamentoResult();
 		departamentoResult.setDepartamentos(departamentos);
 		return departamentoResult;
+	}
+
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public DepartamentoDTO update(Integer id, DepartamentoDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

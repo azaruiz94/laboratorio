@@ -66,7 +66,13 @@ public class MetricaServiceImpl extends BaseServiceImpl<MetricaDTO, MetricaDomai
 	private IMetricaDao metricaDao;
 
 	@Override
-	public MetricaDTO delete(MetricaDTO dto) {
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public MetricaDTO update(Integer id, MetricaDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

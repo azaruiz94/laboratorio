@@ -59,12 +59,6 @@ public class SolicitudDetalleServiceImpl extends BaseServiceImpl<SolicitudDetall
 	}
 
 	@Override
-	public SolicitudDetalleDTO delete(SolicitudDetalleDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public SolicitudDetalleResult getAll(Pageable pageable) {
 		final List<SolicitudDetalleDTO> solicitudDetalles = new ArrayList<>();
 		Page<SolicitudDetalleDomain> resultados = solicitudDetalleDao.findAll(pageable);
@@ -72,5 +66,17 @@ public class SolicitudDetalleServiceImpl extends BaseServiceImpl<SolicitudDetall
 		SolicitudDetalleResult solicitudDetallesResult = new SolicitudDetalleResult();
 		solicitudDetallesResult.setSolicitudes(solicitudDetalles);
 		return solicitudDetallesResult;
+	}
+
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public SolicitudDetalleDTO update(Integer id, SolicitudDetalleDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

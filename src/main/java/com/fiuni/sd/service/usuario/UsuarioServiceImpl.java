@@ -45,11 +45,6 @@ public class UsuarioServiceImpl extends BaseServiceImpl<UsuarioDTO, UsuarioDomai
 		usuariosResult.setUsuarios(usuarios);
 		return usuariosResult;
 	}
-
-	@Override
-	public UsuarioDTO delete(UsuarioDTO dto) {
-		return null;
-	}
 	
 	@Override
 	protected UsuarioDTO convertDomainToDto(UsuarioDomain domain) {
@@ -67,6 +62,18 @@ public class UsuarioServiceImpl extends BaseServiceImpl<UsuarioDTO, UsuarioDomai
 
 	@Override
 	public UsuarioResult getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public UsuarioDTO update(Integer id, UsuarioDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

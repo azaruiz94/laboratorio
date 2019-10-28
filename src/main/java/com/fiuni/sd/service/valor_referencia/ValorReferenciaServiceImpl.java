@@ -57,13 +57,6 @@ public class ValorReferenciaServiceImpl extends BaseServiceImpl<ValorReferenciaD
 		return domain;
 	}
 
-
-	@Override
-	public ValorReferenciaDTO delete(ValorReferenciaDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public ValorReferenciaResult getAll(Pageable pageable) {
 		final List<ValorReferenciaDTO> valoresReferencia = new ArrayList<>();
@@ -72,5 +65,17 @@ public class ValorReferenciaServiceImpl extends BaseServiceImpl<ValorReferenciaD
 		ValorReferenciaResult valorReferenciaResult = new ValorReferenciaResult();
 		valorReferenciaResult.setValorReferencia(valoresReferencia);
 		return valorReferenciaResult;
+	}
+
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ValorReferenciaDTO update(Integer id, ValorReferenciaDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

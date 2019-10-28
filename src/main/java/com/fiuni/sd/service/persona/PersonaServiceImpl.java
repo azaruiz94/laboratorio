@@ -50,12 +50,6 @@ public class PersonaServiceImpl extends BaseServiceImpl<PersonaDTO, PersonaDomai
 	}
 	
 	@Override
-	public PersonaDTO delete(PersonaDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
 	protected PersonaDTO convertDomainToDto(PersonaDomain domain) {
 		final PersonaDTO dto = new PersonaDTO();
 		dto.setId(domain.getId());
@@ -89,5 +83,16 @@ public class PersonaServiceImpl extends BaseServiceImpl<PersonaDTO, PersonaDomai
 	private ICiudadDao ciudadDao;
 	private ISexoDao sexoDao;
 	private ITipoPersonaDao tipoPersonaDao;
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public PersonaDTO update(Integer id, PersonaDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

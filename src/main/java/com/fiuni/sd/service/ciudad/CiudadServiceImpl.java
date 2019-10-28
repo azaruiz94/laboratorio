@@ -56,12 +56,6 @@ public class CiudadServiceImpl extends BaseServiceImpl<CiudadDTO, CiudadDomain, 
 	}
 	
 	@Override
-	public CiudadDTO delete(CiudadDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
 	public CiudadResult getAll(org.springframework.data.domain.Pageable pageable) {
 		final List<CiudadDTO> ciudades = new ArrayList<>();
 		Page<CiudadDomain> resultados = ciudadDao.findAll(pageable);
@@ -69,5 +63,17 @@ public class CiudadServiceImpl extends BaseServiceImpl<CiudadDTO, CiudadDomain, 
 		CiudadResult ciudadResult = new CiudadResult();
 		ciudadResult.setCiudades(ciudades);
 		return ciudadResult;
+	}
+
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public CiudadDTO update(Integer id, CiudadDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

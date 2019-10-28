@@ -66,13 +66,19 @@ public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, Ti
 		domain.setNombre(dto.getNombre());
 		return domain;
 	}
-
-	@Override
-	public TipoAnalisisDTO delete(TipoAnalisisDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	@Autowired
 	private ITipoAnalisisDao tipoAnalisisDao;
+
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public TipoAnalisisDTO update(Integer id, TipoAnalisisDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
