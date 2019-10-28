@@ -42,13 +42,13 @@ public class EstadoResource {
 	}
 	
 	//actualizar
-	@PutMapping("/{id}")
+	@PutMapping("/{id}/editar")
 	public void updateById(@PathVariable(value = "id") Integer estadoId,@RequestBody EstadoDTO dto) {
 		estadoService.update(estadoId, dto);
 	}
 	
 	//borrar
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{id}/borrar")
 	public void deleteEstadoById(@PathVariable(value = "id") Integer estadoId) {
 		estadoService.delete(estadoId);
 	}

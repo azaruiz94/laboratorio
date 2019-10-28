@@ -46,9 +46,17 @@ public class TipoPersonaServiceImpl extends BaseServiceImpl<TipoPersonaDTO, Tipo
 	}
 	
 	@Override
-	public TipoPersonaDTO delete(TipoPersonaDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(Integer id) {
+		tipoPersonaDao.deleteById(id);
+	}
+	
+	@Override
+	public TipoPersonaDTO update(Integer id, TipoPersonaDTO dto) {
+		TipoPersonaDomain domain = tipoPersonaDao.findById(id).get();
+		domain.set_id(dto.getId());
+		domain.setDescripcion(dto.getDescripcion());
+		TipoPersonaDomain tipoPersonaActualizado = tipoPersonaDao.save(domain);
+		return convertDomainToDto(tipoPersonaActualizado);
 	}
 	
 	@Override
@@ -69,11 +77,5 @@ public class TipoPersonaServiceImpl extends BaseServiceImpl<TipoPersonaDTO, Tipo
 
 	@Autowired
 	private ITipoPersonaDao tipoPersonaDao;
-
-	@Override
-	public TipoPersonaDTO delete(TipoPersonaDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }
