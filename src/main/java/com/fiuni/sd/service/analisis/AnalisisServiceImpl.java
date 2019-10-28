@@ -59,14 +59,20 @@ public class AnalisisServiceImpl extends BaseServiceImpl<AnalisisDTO, AnalisisDo
 		domain.setNombre(dto.getNombre());
 		return domain;
 	}
-
-	@Override
-	public AnalisisDTO delete(AnalisisDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	@Autowired
 	private IAnalisisDao analisisDao;
+
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public AnalisisDTO update(Integer id, AnalisisDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

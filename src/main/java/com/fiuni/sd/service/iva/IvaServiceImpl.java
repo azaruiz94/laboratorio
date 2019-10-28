@@ -47,12 +47,6 @@ public class IvaServiceImpl extends BaseServiceImpl<IvaDTO, IvaDomain, IvaResult
 	}
 	
 	@Override
-	public IvaDTO delete(IvaDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
 	protected IvaDTO convertDomainToDto(IvaDomain domain) {
 		final IvaDTO dto = new IvaDTO();
 		dto.setId(domain.get_id());
@@ -72,7 +66,13 @@ public class IvaServiceImpl extends BaseServiceImpl<IvaDTO, IvaDomain, IvaResult
 	private IIvaDao ivaDao;
 
 	@Override
-	public IvaDTO delete(IvaDTO dto) {
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public IvaDTO update(Integer id, IvaDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

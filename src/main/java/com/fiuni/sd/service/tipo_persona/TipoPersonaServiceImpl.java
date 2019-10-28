@@ -77,5 +77,4 @@ public class TipoPersonaServiceImpl extends BaseServiceImpl<TipoPersonaDTO, Tipo
 
 	@Autowired
 	private ITipoPersonaDao tipoPersonaDao;
-	
 }

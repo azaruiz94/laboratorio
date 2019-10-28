@@ -60,12 +60,6 @@ public class PaisServiceImpl extends BaseServiceImpl<PaisDTO, PaisDomain, PaisRe
 	}
 
 	@Override
-	public PaisDTO delete(PaisDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public PaisResult getAll(Pageable pageable) {
 		final List<PaisDTO> paises = new ArrayList<>();
 		Page<PaisDomain> resultados = paisDao.findAll(pageable);
@@ -73,5 +67,17 @@ public class PaisServiceImpl extends BaseServiceImpl<PaisDTO, PaisDomain, PaisRe
 		PaisResult paisResult = new PaisResult();
 		paisResult.setPaises(paises);
 		return paisResult;
+	}
+
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public PaisDTO update(Integer id, PaisDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
