@@ -8,11 +8,13 @@ import com.fiuni.sd.dto.base.BaseDTO;
 
 public interface IBaseService <DTO extends BaseDTO, R extends BaseResult<DTO>>{
 	
-	public DTO delete(DTO dto);
+	public void delete(Integer id); //borrar
 	
-	public DTO save(DTO dto);
+	public DTO save(DTO dto); //crear
 
-	public DTO getById(Integer id);
+	public DTO getById(Integer id); //listar
 	
-	public R getAll(Pageable pageable);
+	public R getAll(Pageable pageable); //listar
+	
+	public DTO update(Integer id, DTO dto); //actualizar
 }
