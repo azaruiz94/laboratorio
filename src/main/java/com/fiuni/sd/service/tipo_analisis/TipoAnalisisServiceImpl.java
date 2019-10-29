@@ -30,10 +30,10 @@ public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, Ti
 	@Override
 	@Transactional
 	public TipoAnalisisDTO getById(Integer id) {
-		//final TipoAnalisisDomain domain = tipoAnalisisDao.findById(id).get();
-		TipoAnalisisDomain resultado= tipoAnalisisDao.findById(id).isPresent() ? tipoAnalisisDao.findById(id).get() : null;
-		//return convertDomainToDto(domain);
-		return convertDomainToDto(resultado);
+		final TipoAnalisisDomain domain = tipoAnalisisDao.findById(id).get();
+		//TipoAnalisisDomain resultado= tipoAnalisisDao.findById(id).isPresent() ? tipoAnalisisDao.findById(id).get() : null;
+		return convertDomainToDto(domain);
+		//return convertDomainToDto(resultado);
 	}
 
 	@Override
