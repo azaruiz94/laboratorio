@@ -74,5 +74,11 @@ public class AnalisisServiceImpl extends BaseServiceImpl<AnalisisDTO, AnalisisDo
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public AnalisisResult search(Pageable pageable, String texto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

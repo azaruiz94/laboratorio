@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.fiuni.sd.dao.ubicacion.ciudad.ICiudadDao;
@@ -73,6 +74,12 @@ public class CiudadServiceImpl extends BaseServiceImpl<CiudadDTO, CiudadDomain, 
 
 	@Override
 	public CiudadDTO update(Integer id, CiudadDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CiudadResult search(Pageable pageable, String texto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

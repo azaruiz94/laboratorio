@@ -84,4 +84,10 @@ public class SolicitudServiceImpl extends BaseServiceImpl<SolicitudDTO, Solicitu
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public SolicitudResult search(Pageable pageable, String texto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

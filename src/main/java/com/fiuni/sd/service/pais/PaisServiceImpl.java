@@ -80,4 +80,10 @@ public class PaisServiceImpl extends BaseServiceImpl<PaisDTO, PaisDomain, PaisRe
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public PaisResult search(Pageable pageable, String texto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

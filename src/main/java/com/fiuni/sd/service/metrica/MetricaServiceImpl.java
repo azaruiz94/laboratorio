@@ -76,5 +76,11 @@ public class MetricaServiceImpl extends BaseServiceImpl<MetricaDTO, MetricaDomai
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public MetricaResult search(Pageable pageable, String texto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

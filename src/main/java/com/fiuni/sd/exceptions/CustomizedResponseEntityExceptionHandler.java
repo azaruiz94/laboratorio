@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler(DomainNotFoundException.class)
   public final ResponseEntity<ExceptionResponse> handleNotFoundException(DomainNotFoundException ex, WebRequest request) {
-    ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false), HttpStatus.NOT_FOUND.getReasonPhrase());
+    ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),  ex.getMessage(), request.getDescription(false), HttpStatus.NOT_FOUND.getReasonPhrase());
     return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_FOUND);
   }
 }

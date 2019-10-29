@@ -43,6 +43,10 @@ public class TipoAnalisisResource {
 	public TipoAnalisisDTO save(@Valid @RequestBody TipoAnalisisDTO tipoAnalisis) {
 		return tipoAnalisisService.save(tipoAnalisis);
 	}
+	@GetMapping(path= "/buscar/{texto}/pag/{pag_num}")
+	public TipoAnalisisResult search(@PathVariable(value= "pag_num") Integer pagNum, @PathVariable(value= "texto") String texto) {
+		return tipoAnalisisService.search(PageRequest.of(pagNum-1, Configuracion.PAGE_SIZE), texto);
+	}
 	
 	@Autowired
 	private ITipoAnalisisService tipoAnalisisService;

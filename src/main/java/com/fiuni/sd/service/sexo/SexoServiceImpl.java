@@ -77,5 +77,11 @@ public class SexoServiceImpl extends BaseServiceImpl<SexoDTO, SexoDomain, SexoRe
 
 	@Autowired
 	private ISexoDao sexoDao;
+
+	@Override
+	public SexoResult search(Pageable pageable, String texto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

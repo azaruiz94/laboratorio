@@ -78,5 +78,11 @@ public class EstadoServiceImpl extends BaseServiceImpl<EstadoDTO, EstadoDomain, 
 	@Autowired
 	private IEstadoDao estadoDao;
 
+	@Override
+	public EstadoResult search(Pageable pageable, String texto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

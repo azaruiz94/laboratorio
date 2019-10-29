@@ -77,4 +77,10 @@ public class TipoPersonaServiceImpl extends BaseServiceImpl<TipoPersonaDTO, Tipo
 
 	@Autowired
 	private ITipoPersonaDao tipoPersonaDao;
+
+	@Override
+	public TipoPersonaResult search(Pageable pageable, String texto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

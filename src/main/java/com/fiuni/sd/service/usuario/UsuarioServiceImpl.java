@@ -78,5 +78,11 @@ public class UsuarioServiceImpl extends BaseServiceImpl<UsuarioDTO, UsuarioDomai
 		return null;
 	}
 
+	@Override
+	public UsuarioResult search(Pageable pageable, String texto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

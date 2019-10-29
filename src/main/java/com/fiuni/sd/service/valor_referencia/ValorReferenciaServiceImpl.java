@@ -78,4 +78,10 @@ public class ValorReferenciaServiceImpl extends BaseServiceImpl<ValorReferenciaD
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public ValorReferenciaResult search(Pageable pageable, String texto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
