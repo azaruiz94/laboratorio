@@ -75,5 +75,11 @@ public class CentroAsistencialServiceImpl extends BaseServiceImpl<CentroAsistenc
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public CentroAsistencialResult search(Pageable pageable, String texto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

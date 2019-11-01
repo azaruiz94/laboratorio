@@ -16,5 +16,7 @@ public interface IBaseService <DTO extends BaseDTO, R extends BaseResult<DTO>>{
 	
 	public R getAll(Pageable pageable); //listar
 	
+	public R search(Pageable pageable, String texto); //buscar
+	
 	public DTO update(Integer id, DTO dto); //actualizar
 }

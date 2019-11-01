@@ -30,10 +30,8 @@ public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, Ti
 	@Override
 	@Transactional
 	public TipoAnalisisDTO getById(Integer id) {
-		//final TipoAnalisisDomain domain = tipoAnalisisDao.findById(id).get();
-		TipoAnalisisDomain resultado= tipoAnalisisDao.findById(id).isPresent() ? tipoAnalisisDao.findById(id).get() : null;
-		//return convertDomainToDto(domain);
-		return convertDomainToDto(resultado);
+		final TipoAnalisisDomain domain = tipoAnalisisDao.findById(id).get();
+		return convertDomainToDto(domain);
 	}
 
 	@Override
@@ -80,5 +78,16 @@ public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, Ti
 	public TipoAnalisisDTO update(Integer id, TipoAnalisisDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public TipoAnalisisResult search(Pageable pageable, String texto) {
+		final List<TipoAnalisisDTO> tipos_analisis = new ArrayList<>();
+		Page<TipoAnalisisDomain> resultados = tipoAnalisisDao.search(pageable, texto);
+		resultados.forEach(e -> tipos_analisis.add(convertDomainToDto(e)));
+		
+		TipoAnalisisResult tipoAnalisisResult = new TipoAnalisisResult();
+		tipoAnalisisResult.setTiposAnalisis(tipos_analisis);
+		return tipoAnalisisResult;
 	}
 }

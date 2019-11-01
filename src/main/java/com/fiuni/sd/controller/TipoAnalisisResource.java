@@ -1,6 +1,6 @@
 package com.fiuni.sd.controller;
 
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
@@ -15,23 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fiuni.sd.dto.tipo_analisis.TipoAnalisisDTO;
 import com.fiuni.sd.dto.tipo_analisis.TipoAnalisisResult;
-import com.fiuni.sd.exceptions.tipo_analisis.TipoAnalisisNotFoundException;
+import com.fiuni.sd.exceptions.DomainNotFoundException;
 import com.fiuni.sd.service.tipo_analisis.ITipoAnalisisService;
 import com.fiuni.sd.utils.Configuracion;
 
 @RestController
 @RequestMapping("/tipos-analisis")
 public class TipoAnalisisResource {
-	
 	//buscar por id
 	@GetMapping("/{id}")
 	public TipoAnalisisDTO getById(@PathVariable(value = "id") Integer tipoAnalisisId) {
-		Optional<TipoAnalisisDTO> resultado= Optional.ofNullable(tipoAnalisisService.getById(tipoAnalisisId));
-		if(resultado.get().equals(null)) {
-			System.out.println("entrado en if...");
-			return resultado.get();
-		}else {
-			return resultado.orElseThrow(() -> new TipoAnalisisNotFoundException(tipoAnalisisId));
+		try {
+			return tipoAnalisisService.getById(tipoAnalisisId);
+		}catch(NoSuchElementException e) {
+			throw new DomainNotFoundException("registro: "+tipoAnalisisId+ " no encontrado");
 		}
 	}
 	
@@ -45,6 +42,10 @@ public class TipoAnalisisResource {
 	@PostMapping()
 	public TipoAnalisisDTO save(@Valid @RequestBody TipoAnalisisDTO tipoAnalisis) {
 		return tipoAnalisisService.save(tipoAnalisis);
+	}
+	@GetMapping(path= "/buscar/{texto}/pag/{pag_num}")
+	public TipoAnalisisResult search(@PathVariable(value= "pag_num") Integer pagNum, @PathVariable(value= "texto") String texto) {
+		return tipoAnalisisService.search(PageRequest.of(pagNum-1, Configuracion.PAGE_SIZE), texto);
 	}
 	
 	@Autowired

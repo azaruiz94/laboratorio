@@ -62,13 +62,19 @@ public class PersonaServiceImpl extends BaseServiceImpl<PersonaDTO, PersonaDomai
 		domain.setDireccion(dto.getDireccion());
 		domain.setEmail(dto.getEmail());		
 		domain.setNumero_registro(dto.getNumero_registro());
-	    domain.setRuc_ci(dto.getRuc_ci());
+	  domain.setRuc_ci(dto.getRuc_ci());
 		domain.setSexo(dto.getSexoId());
 		domain.setTelefono(dto.getTelefono());
 		domain.setTipoPersona(dto.getTipoPersonaId());
 
 		PersonaDomain personaActualizada = personaDao.save(domain);
 		return convertDomainToDto(personaActualizada);
+	}
+  
+  @Override
+	public PersonaResult search(Pageable pageable, String texto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	@Override
