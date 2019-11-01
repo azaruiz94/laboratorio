@@ -5,14 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fiuni.sd.domain.base.BaseDomain;
-import com.fiuni.sd.domain.sexo.SexoDomain;
-import com.fiuni.sd.domain.tipo_persona.TipoPersonaDomain;
-import com.fiuni.sd.domain.ubicacion.ciudad.CiudadDomain;
 
 @Entity
 @Table(name = "persona")
@@ -31,13 +26,13 @@ public class PersonaDomain implements BaseDomain {
 		this._id = id;
 	}
 	
-	public CiudadDomain getCiudadId() {
-		return _ciudad;
+	public Integer getCiudadId() {
+		return _ciudadId;
 	}
 
 	
-	public void setCiudad(CiudadDomain ciudad) {
-		this._ciudad = ciudad;
+	public void setCiudad(Integer ciudad) {
+		this._ciudadId = ciudad;
 	}
 	
 	public String getNombre() {
@@ -89,30 +84,30 @@ public class PersonaDomain implements BaseDomain {
 	}
 
 	
-	public SexoDomain getSexo() {
+	public Integer getSexo() {
 		return _sexo;
 	}
 	
-	public void setSexo(SexoDomain sexo) {
+	public void setSexo(Integer sexo) {
 		this._sexo = sexo;
 	}
 	
-	public TipoPersonaDomain getTipoPersona() {
+	public Integer getTipoPersona() {
 		return _tipoPersona;
 	}
 	
-	public void setTipoPersona(TipoPersonaDomain tipoPersona) {
+	public void setTipoPersona(Integer tipoPersona) {
 		this._tipoPersona = tipoPersona;
 	}
 	
-	@ManyToOne
-	private TipoPersonaDomain _tipoPersona;
+	@Column(name = "tipoPersonaId")
+	private Integer _tipoPersona;
 	
-	@OneToOne
-	private SexoDomain _sexo;
+	@Column(name = "sexoId")
+	private Integer _sexo;
 	
-	@OneToOne
-	private CiudadDomain _ciudad;
+	@Column(name = "ciudadId")
+	private Integer _ciudadId;
 	
 	@Column(name="nombre")
 	private String _nombre;

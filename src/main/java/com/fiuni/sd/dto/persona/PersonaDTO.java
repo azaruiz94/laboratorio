@@ -9,12 +9,12 @@ public class PersonaDTO extends BaseDTO{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public Integer getCiudadDTOId() {
-		return _ciudadDTOId;
+	public Integer getCiudadId() {
+		return _ciudadId;
 	}
 	
-	public void setCiudadDTOId(Integer ciudadDTOId) {
-		this._ciudadDTOId = ciudadDTOId;
+	public void setCiudadId(Integer ciudadId) {
+		this._ciudadId = ciudadId;
 	}
 	
 	public String getNombre() {
@@ -33,6 +33,30 @@ public class PersonaDTO extends BaseDTO{
 		this._ruc_ci = ruc_ci;
 	}
 	
+	public String getEmail() {
+		return _email;
+	}
+	
+	public void setEmail(String email) {
+		this._email = email;
+	}
+	
+	public String getDireccion() {
+		return _direccion;
+	}
+	
+	public void setDireccion(String direccion) {
+		this._direccion = direccion;
+	}
+	
+	public String getTelefono() {
+		return _telefono;
+	}
+	
+	public void setTelefono(String telefono) {
+		this._telefono = telefono;
+	}
+	
 	public Integer getNumero_registro() {
 		return _numero_registro;
 	}
@@ -41,27 +65,30 @@ public class PersonaDTO extends BaseDTO{
 		this._numero_registro = numero_registro;
 	}
 	
-	public Integer getSexoDTOId() {
-		return _sexoDTOId;
+	public Integer getSexoId() {
+		return _sexoId;
 	}
 	
-	public void setSexoDTOId(Integer sexoDTOId) {
-		this._sexoDTOId = sexoDTOId;
+	public void setSexoId(Integer sexoId) {
+		this._sexoId = sexoId;
 	}
 	
-	public Integer getTipoPersonaDTOId() {
-		return _tipoPersonaDTOId;
+	public Integer getTipoPersonaId() {
+		return _tipoPersonaId;
 	}
 	
-	public void setTipoPersonaDTOId(Integer tipoPersonaDTOId) {
-		this._tipoPersonaDTOId = tipoPersonaDTOId;
+	public void setTipoPersonaId(Integer tipoPersonaId) {
+		this._tipoPersonaId = tipoPersonaId;
 	}
 	
 
-	private Integer _tipoPersonaDTOId;
-	private Integer _sexoDTOId;
-	private Integer _ciudadDTOId;
+	private Integer _tipoPersonaId;
+	private Integer _sexoId;
+	private Integer _ciudadId;
+	private Integer _numero_registro;
 	private String _nombre;
 	private String _ruc_ci;
-	private Integer _numero_registro;
+	private String _email;
+	private String _telefono;
+	private String _direccion;
 }

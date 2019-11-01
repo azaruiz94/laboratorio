@@ -11,9 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fiuni.sd.dao.persona.IPersonaDao;
-import com.fiuni.sd.dao.sexo.ISexoDao;
-import com.fiuni.sd.dao.tipo_persona.ITipoPersonaDao;
-import com.fiuni.sd.dao.ubicacion.ciudad.ICiudadDao;
 import com.fiuni.sd.domain.persona.PersonaDomain;
 import com.fiuni.sd.dto.persona.PersonaDTO;
 import com.fiuni.sd.dto.persona.PersonaResult;
@@ -49,56 +46,72 @@ public class PersonaServiceImpl extends BaseServiceImpl<PersonaDTO, PersonaDomai
 		return personaResult;
 	}
 	
-	@Override
-	protected PersonaDTO convertDomainToDto(PersonaDomain domain) {
-		final PersonaDTO dto = new PersonaDTO();
-		dto.setId(domain.getId());
-		dto.setCiudadDTOId(domain.getCiudadId().getId());
-		dto.setNumero_registro(domain.getNumero_registro());
-		dto.setRuc_ci(domain.getRuc_ci());
-		dto.setNombre(domain.getNombre());
-		dto.setSexoDTOId(domain.getSexo().get_id());
-		dto.setTipoPersonaDTOId(domain.getTipoPersona().get_id());
-		return dto;
-	}
-
-	@Override
-	protected PersonaDomain convertDtoToDomain(PersonaDTO dto) {
-		final PersonaDomain domain = new PersonaDomain();
-		domain.setId(dto.getId());
-		domain.setCiudad(ciudadDao.findById(dto.getId()).get());
-		domain.setNumero_registro(dto.getNumero_registro());
-		domain.setRuc_ci(dto.getRuc_ci());
-		domain.setNombre(dto.getNombre());
-		domain.setSexo(sexoDao.findById(dto.getId()).get());
-		domain.setTipoPersona(tipoPersonaDao.findById(dto.getId()).get());
-		domain.setDireccion(personaDao.findById(dto.getId()).get().getDireccion());
-		domain.setEmail(personaDao.findById(dto.getId()).get().getEmail());
-		domain.setTelefono(personaDao.findById(dto.getId()).get().getTelefono());
-		return domain;
-	}
-
-	@Autowired
-	private IPersonaDao personaDao;
-	private ICiudadDao ciudadDao;
-	private ISexoDao sexoDao;
-	private ITipoPersonaDao tipoPersonaDao;
+	
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
-		
+		personaDao.deleteById(id);
 	}
 
 	@Override
 	public PersonaDTO update(Integer id, PersonaDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		PersonaDomain domain = personaDao.findById(id).get();
+		
+		domain.setId(dto.getId());	
+		domain.setNombre(dto.getNombre());
+		domain.setCiudad(dto.getCiudadId());		
+		domain.setDireccion(dto.getDireccion());
+		domain.setEmail(dto.getEmail());		
+		domain.setNumero_registro(dto.getNumero_registro());
+	  domain.setRuc_ci(dto.getRuc_ci());
+		domain.setSexo(dto.getSexoId());
+		domain.setTelefono(dto.getTelefono());
+		domain.setTipoPersona(dto.getTipoPersonaId());
 
-	@Override
+		PersonaDomain personaActualizada = personaDao.save(domain);
+		return convertDomainToDto(personaActualizada);
+	}
+  
+  @Override
 	public PersonaResult search(Pageable pageable, String texto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
+	@Override
+	protected PersonaDTO convertDomainToDto(PersonaDomain domain) {
+		final PersonaDTO dto = new PersonaDTO();
+		
+		dto.setId(domain.getId());
+		dto.setNombre(domain.getNombre());
+		dto.setCiudadId(domain.getCiudadId());
+		dto.setNumero_registro(domain.getNumero_registro());
+		dto.setRuc_ci(domain.getRuc_ci());
+		dto.setSexoId(domain.getSexo());
+ 		dto.setTipoPersonaId(domain.getTipoPersona());
+ 		dto.setDireccion(domain.getDireccion());
+ 		dto.setEmail(domain.getEmail());
+ 		dto.setTelefono(domain.getTelefono());
+ 		return dto;
+	}
+
+	@Override
+	protected PersonaDomain convertDtoToDomain(PersonaDTO dto) {
+		final PersonaDomain domain = new PersonaDomain();
+		
+		domain.setId(dto.getId());		
+		domain.setNombre(dto.getNombre());
+		domain.setCiudad(dto.getCiudadId());
+		domain.setDireccion(dto.getDireccion());
+		domain.setEmail(dto.getEmail());
+		domain.setNumero_registro(dto.getNumero_registro());
+		domain.setRuc_ci(dto.getRuc_ci());
+		domain.setSexo(dto.getSexoId());
+		domain.setTelefono(dto.getTelefono());
+		domain.setTipoPersona(dto.getTipoPersonaId());
+
+		return domain;
+	}
+
+	@Autowired
+	private IPersonaDao personaDao;	
 }
