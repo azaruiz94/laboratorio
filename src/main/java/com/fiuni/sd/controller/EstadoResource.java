@@ -31,7 +31,7 @@ public class EstadoResource {
 	//Read
 	@GetMapping(path = "/pag/{pag_num}")
 	public EstadoResult getEstados(@PathVariable(value = "pag_num")Integer pagNum) {
-		return estadoService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+		return estadoService.getAll(PageRequest.of((pagNum - 1), config.getPageSize()));
 	}
 	
 	
@@ -55,4 +55,7 @@ public class EstadoResource {
 	
 	@Autowired
 	private IEstadoService estadoService;
+	
+	@Autowired
+	Configuracion config;
 }

@@ -29,7 +29,7 @@ public class MetricaResource {
 	//Read
 	@GetMapping(path = "/pag/{pag_num}")
 	public MetricaResult getEstados(@PathVariable(value = "pag_num")Integer pagNum) {
-		return tipoAnalisisService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+		return tipoAnalisisService.getAll(PageRequest.of((pagNum - 1), config.getPageSize()));
 	}
 	
 	//create
@@ -40,4 +40,7 @@ public class MetricaResource {
 	
 	@Autowired
 	private IMetricaService tipoAnalisisService;
+	
+	@Autowired
+	Configuracion config;
 }

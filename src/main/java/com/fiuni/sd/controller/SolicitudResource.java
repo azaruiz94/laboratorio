@@ -29,7 +29,7 @@ public class SolicitudResource {
 	//Read
 	@GetMapping(path = "/pag/{pag_num}")
 	public SolicitudResult getSolicitudes(@PathVariable(value = "pag_num")Integer pagNum) {
-		return solicitudService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+		return solicitudService.getAll(PageRequest.of((pagNum - 1), config.getPageSize()));
 	}
 	
 	//create
@@ -40,4 +40,7 @@ public class SolicitudResource {
 	
 	@Autowired
 	private ISolicitudService solicitudService;
+	
+	@Autowired
+	Configuracion config;
 }

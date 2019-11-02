@@ -31,7 +31,7 @@ public class IvaResource {
 	//Read
 	@GetMapping(path = "/pag/{pag_num}")
 	public IvaResult getEstados(@PathVariable(value = "pag_num")Integer pagNum) {
-		return ivaService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+		return ivaService.getAll(PageRequest.of((pagNum - 1), config.getPageSize()));
 	}
 	
 	
@@ -55,4 +55,7 @@ public class IvaResource {
 	
 	@Autowired
 	private IIvaService ivaService;
+	
+	@Autowired
+	Configuracion config;
 }

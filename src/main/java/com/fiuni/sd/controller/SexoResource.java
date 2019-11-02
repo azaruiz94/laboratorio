@@ -32,7 +32,7 @@ public class SexoResource {
 	//Read
 	@GetMapping(path = "/pag/{pag_num}")
 	public SexoResult getSexos(@PathVariable(value = "pag_num")Integer pagNum) {
-		return sexoService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+		return sexoService.getAll(PageRequest.of((pagNum - 1), config.getPageSize()));
 	}
 	
 	
@@ -56,4 +56,7 @@ public class SexoResource {
 		
 	@Autowired
 	private ISexoService sexoService;
+	
+	@Autowired
+	Configuracion config;
 }

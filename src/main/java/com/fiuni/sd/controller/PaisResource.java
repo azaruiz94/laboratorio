@@ -18,6 +18,10 @@ import com.fiuni.sd.utils.Configuracion;
 @RestController
 @RequestMapping("/paises")
 public class PaisResource {
+	
+	@Autowired
+	Configuracion config;
+	
 	@Autowired
 	private IPaisService paisService;
 
@@ -28,7 +32,7 @@ public class PaisResource {
 
 	@GetMapping(path = "/pag/{pag_num}")
 	public PaisResult getPaises(@PathVariable(value = "pag_num")Integer pagNum) {
-		return paisService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+		return paisService.getAll(PageRequest.of((pagNum - 1), config.getPageSize()));
 	}
 
 	@GetMapping(params= {"page","size"})

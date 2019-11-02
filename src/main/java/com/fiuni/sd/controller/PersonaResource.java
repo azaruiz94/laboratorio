@@ -31,7 +31,7 @@ public class PersonaResource {
 	//Read
 	@GetMapping(path = "/pag/{pag_num}")
 	public PersonaResult getPersonas(@PathVariable(value = "pag_num")Integer pagNum) {
-		return personaService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+		return personaService.getAll(PageRequest.of((pagNum - 1), config.getPageSize()));
 	}
 	
 	
@@ -57,4 +57,7 @@ public class PersonaResource {
 	
 	@Autowired
 	private IPersonaService personaService;
+	
+	@Autowired
+	Configuracion config;
 }
