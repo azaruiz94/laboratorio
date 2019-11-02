@@ -32,7 +32,7 @@ public class TipoPersonaResource {
 	//Read
 	@GetMapping(path = "/pag/{pag_num}")
 	public TipoPersonaResult getSexos(@PathVariable(value = "pag_num")Integer pagNum) {
-		return tipoPersonaService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+		return tipoPersonaService.getAll(PageRequest.of((pagNum - 1), config.getPageSize()));
 	}
 	
 	
@@ -57,4 +57,7 @@ public class TipoPersonaResource {
 	
 	@Autowired
 	private ITipoPersonaService tipoPersonaService;
+	
+	@Autowired
+	Configuracion config;
 }

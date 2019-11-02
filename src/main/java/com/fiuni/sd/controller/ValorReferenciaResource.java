@@ -17,6 +17,10 @@ import com.fiuni.sd.utils.Configuracion;
 @RestController
 @RequestMapping("/valoresReferencia")
 public class ValorReferenciaResource {
+	
+	@Autowired
+	Configuracion config;
+	
 	@Autowired
 	private IValorReferenciaService valorReferenciaService;
 
@@ -27,7 +31,7 @@ public class ValorReferenciaResource {
 
 	@GetMapping(path = "/pag/{pag_num}")
 	public ValorReferenciaResult getValorReferencia(@PathVariable(value = "pag_num") Integer pagNum) {
-		return valorReferenciaService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+		return valorReferenciaService.getAll(PageRequest.of((pagNum - 1), config.getPageSize()));
 	}
 
 	@PostMapping()

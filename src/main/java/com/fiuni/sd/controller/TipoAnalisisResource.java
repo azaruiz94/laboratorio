@@ -35,7 +35,7 @@ public class TipoAnalisisResource {
 	//Read
 	@GetMapping(path = "/pag/{pag_num}")
 	public TipoAnalisisResult getEstados(@PathVariable(value = "pag_num")Integer pagNum) {
-		return tipoAnalisisService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+		return tipoAnalisisService.getAll(PageRequest.of((pagNum - 1), config.getPageSize()));
 	}
 	
 	//create
@@ -45,9 +45,12 @@ public class TipoAnalisisResource {
 	}
 	@GetMapping(path= "/buscar/{texto}/pag/{pag_num}")
 	public TipoAnalisisResult search(@PathVariable(value= "pag_num") Integer pagNum, @PathVariable(value= "texto") String texto) {
-		return tipoAnalisisService.search(PageRequest.of(pagNum-1, Configuracion.PAGE_SIZE), texto);
+		return tipoAnalisisService.search(PageRequest.of(pagNum-1, config.getPageSize()), texto);
 	}
 	
 	@Autowired
 	private ITipoAnalisisService tipoAnalisisService;
+	
+	@Autowired
+	Configuracion config;
 }

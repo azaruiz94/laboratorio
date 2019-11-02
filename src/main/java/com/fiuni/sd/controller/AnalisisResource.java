@@ -20,6 +20,7 @@ import com.fiuni.sd.utils.Configuracion;
 @RequestMapping("/analisis")
 public class AnalisisResource {
 	
+	
 	//buscar por id
 	@GetMapping("/{id}")
 	public AnalisisDTO getById(@PathVariable(value = "id") Integer analisisId) {
@@ -29,7 +30,7 @@ public class AnalisisResource {
 	//Read
 	@GetMapping(path = "/pag/{pag_num}")
 	public AnalisisResult getEstados(@PathVariable(value = "pag_num")Integer pagNum) {
-		return analisisService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+		return analisisService.getAll(PageRequest.of((pagNum - 1), config.getPageSize()));
 	}
 	
 	//create
@@ -40,4 +41,7 @@ public class AnalisisResource {
 	
 	@Autowired
 	private IAnalisisService analisisService;
+	
+	@Autowired
+	Configuracion config;
 }

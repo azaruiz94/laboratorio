@@ -17,6 +17,10 @@ import com.fiuni.sd.utils.Configuracion;
 @RestController
 @RequestMapping("/departamentos")
 public class DepartamentoResource {
+	
+	@Autowired
+	Configuracion config;
+	
 	@Autowired
 	private IDepartamentoService departamentoService;
 
@@ -27,7 +31,7 @@ public class DepartamentoResource {
 
 	@GetMapping(path = "/pag/{pag_num}")
 	public DepartamentoResult getDepartamentos(@PathVariable(value = "pag_num") Integer pagNum) {
-		return departamentoService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+		return departamentoService.getAll(PageRequest.of((pagNum - 1), config.getPageSize()));
 	}
 
 	@PostMapping()

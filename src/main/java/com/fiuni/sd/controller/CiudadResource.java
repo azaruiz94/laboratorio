@@ -19,6 +19,10 @@ import com.fiuni.sd.utils.Configuracion;
 @RestController
 @RequestMapping("/ciudades")
 public class CiudadResource {
+	
+	@Autowired
+	Configuracion config;
+	
 	@Autowired
 	private ICiudadService ciudadService;
 
@@ -29,7 +33,7 @@ public class CiudadResource {
 
 	@GetMapping(path = "/page/", params= {"page","size"})
 	public CiudadResult getCiudades(@PathVariable(value = "page_num")Integer pageNum) {
-		return ciudadService.getAll(PageRequest.of(pageNum, Configuracion.PAGE_SIZE));
+		return ciudadService.getAll(PageRequest.of(pageNum, config.getPageSize()));
 	}
 
 	@PostMapping()

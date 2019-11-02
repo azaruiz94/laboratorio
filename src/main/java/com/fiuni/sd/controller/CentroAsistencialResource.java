@@ -29,7 +29,7 @@ public class CentroAsistencialResource {
 	//Read
 	@GetMapping(path = "/pag/{pag_num}")
 	public CentroAsistencialResult getEstados(@PathVariable(value = "pag_num")Integer pagNum) {
-		return centroAsistencialService.getAll(PageRequest.of((pagNum - 1), Configuracion.PAGE_SIZE));
+		return centroAsistencialService.getAll(PageRequest.of((pagNum - 1), config.getPageSize()));
 	}
 	
 	//create
@@ -40,4 +40,7 @@ public class CentroAsistencialResource {
 	
 	@Autowired
 	private ICentroAsistencialService centroAsistencialService;
+	
+	@Autowired
+	Configuracion config;
 }
