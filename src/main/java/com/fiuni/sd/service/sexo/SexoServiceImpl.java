@@ -1,10 +1,10 @@
 package com.fiuni.sd.service.sexo;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ import com.fiuni.sd.domain.sexo.SexoDomain;
 import com.fiuni.sd.dto.sexo.SexoDTO;
 import com.fiuni.sd.dto.sexo.SexoResult;
 import com.fiuni.sd.service.base.BaseServiceImpl;
+import com.fiuni.sd.utils.Configuracion;
 
 
 @Service
@@ -25,7 +26,12 @@ public class SexoServiceImpl extends BaseServiceImpl<SexoDTO, SexoDomain, SexoRe
 	public SexoDTO save(SexoDTO dto) {
 		final SexoDomain domain = convertDtoToDomain(dto);
 		final SexoDomain sexoDomain = sexoDao.save(domain);
-		return convertDomainToDto(sexoDomain);
+		SexoDTO sexoDto = convertDomainToDto(sexoDomain);
+		if(null == sexoDto.getId()) {
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("sexoDomain", sexoDto.getId()), sexoDto);
+		}
+		
+		return sexoDto;
 	}
 
 	@Override
@@ -60,6 +66,13 @@ public class SexoServiceImpl extends BaseServiceImpl<SexoDTO, SexoDomain, SexoRe
 	}
 	
 	@Override
+	public SexoResult search(Pageable pageable, String texto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	@Override
 	protected SexoDTO convertDomainToDto(SexoDomain domain) {
 		final SexoDTO dto = new SexoDTO();
 		dto.setId(domain.get_id());
@@ -74,14 +87,18 @@ public class SexoServiceImpl extends BaseServiceImpl<SexoDTO, SexoDomain, SexoRe
 		domain.setDescripcion(dto.getDescripcion());
 		return domain;
 	}
+	
+	private String formatCacheKey(String domain, Integer id) {
+		String base = "api_";
+		return base + domain + "_" + id;
+	}
 
 	@Autowired
 	private ISexoDao sexoDao;
-
-	@Override
-	public SexoResult search(Pageable pageable, String texto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
+	@Autowired
+	CacheManager cacheManager;
+	
+	@Autowired
+	Configuracion config;
 }

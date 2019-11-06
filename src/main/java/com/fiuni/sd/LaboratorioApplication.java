@@ -3,12 +3,12 @@ package com.fiuni.sd;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
-//import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.ImportResource;
 import org.apache.log4j.Logger;
 import org.joda.time.LocalDate;
 
 @SpringBootApplication
-//@ImportResource("classpath:memcached.xml")
+@ImportResource("classpath:memcached.xml")
 @EnableCaching
 public class LaboratorioApplication {
 	
