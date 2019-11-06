@@ -19,4 +19,6 @@ public interface IBaseService <DTO extends BaseDTO, R extends BaseResult<DTO>>{
 	public R search(Pageable pageable, String texto); //buscar
 	
 	public DTO update(Integer id, DTO dto); //actualizar
+	
+	public String formatCacheKey(String domain, Integer id);
 }
