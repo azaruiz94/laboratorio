@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,7 @@ public class SexoServiceImpl extends BaseServiceImpl<SexoDTO, SexoDomain, SexoRe
 
 	@Override
 	@Transactional
+	@Cacheable(value = "api_laboratorio_cache", key = "'api_sexoDomain' + #id")
 	public SexoDTO getById(Integer id) {
 		final SexoDomain domain = sexoDao.findById(id).get();
 		return convertDomainToDto(domain);
@@ -88,7 +90,7 @@ public class SexoServiceImpl extends BaseServiceImpl<SexoDTO, SexoDomain, SexoRe
 		return domain;
 	}
 	
-	private String formatCacheKey(String domain, Integer id) {
+	public String formatCacheKey(String domain, Integer id) {
 		String base = "api_";
 		return base + domain + "_" + id;
 	}
