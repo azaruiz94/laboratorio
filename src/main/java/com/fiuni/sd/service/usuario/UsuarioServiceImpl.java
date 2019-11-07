@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,22 +16,35 @@ import com.fiuni.sd.domain.credenciales.usuario.UsuarioDomain;
 import com.fiuni.sd.dto.usuario.UsuarioDTO;
 import com.fiuni.sd.dto.usuario.UsuarioResult;
 import com.fiuni.sd.service.base.BaseServiceImpl;
+import com.fiuni.sd.utils.Configuracion;
 
 @Service
 public class UsuarioServiceImpl extends BaseServiceImpl<UsuarioDTO, UsuarioDomain, UsuarioResult> implements IUsuarioService  {
 	@Autowired
 	IUsuarioDao usuarioDao;
+	
+	@Autowired
+	CacheManager cacheManager;
+	
+	@Autowired
+	Configuracion config;
 
 	@Override
 	@Transactional
 	public UsuarioDTO save(UsuarioDTO dto) {
 		final UsuarioDomain domain = convertDtoToDomain(dto);
 		final UsuarioDomain usuarioDomain = usuarioDao.save(domain);
-		return convertDomainToDto(usuarioDomain);
+		UsuarioDTO usuarioDto = convertDomainToDto(usuarioDomain);
+		if(null == usuarioDto.getId()) {
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("usuarioDomain", usuarioDto.getId()), usuarioDto);
+		}
+		
+		return usuarioDto;
 	}
 
 	@Override
 	@Transactional
+	@Cacheable(value = "api_laboratorio_cache", key = "'api_usuarioDomain' + #id")
 	public UsuarioDTO getById(Integer id) {
 		final UsuarioDomain domain = usuarioDao.findById(id).get();
 		return convertDomainToDto(domain);
@@ -39,7 +54,11 @@ public class UsuarioServiceImpl extends BaseServiceImpl<UsuarioDTO, UsuarioDomai
 	public UsuarioResult getAll(Pageable pageable) {
 		final List<UsuarioDTO> usuarios = new ArrayList<>();
 		Page<UsuarioDomain> resultados = usuarioDao.findAll(pageable);
-		resultados.forEach(e -> usuarios.add(convertDomainToDto(e)));
+		resultados.forEach(e -> {
+			UsuarioDTO usuarioDto = convertDomainToDto(e);
+			usuarios.add(usuarioDto);
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("usuarioDomain", usuarioDto.getId()), usuarioDto);
+		});
 		
 		UsuarioResult usuariosResult = new UsuarioResult();
 		usuariosResult.setUsuarios(usuarios);
@@ -86,8 +105,8 @@ public class UsuarioServiceImpl extends BaseServiceImpl<UsuarioDTO, UsuarioDomai
 
 	@Override
 	public String formatCacheKey(String domain, Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		String base = "api_";
+		return base + domain + "_" + id;
 	}
 
 
