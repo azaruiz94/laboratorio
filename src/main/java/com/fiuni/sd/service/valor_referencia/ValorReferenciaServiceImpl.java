@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.fiuni.sd.domain.valor_referencia.ValorReferenciaDomain;
 import com.fiuni.sd.dto.valor_referencia.ValorReferenciaDTO;
 import com.fiuni.sd.dto.valor_referencia.ValorReferenciaResult;
 import com.fiuni.sd.service.base.BaseServiceImpl;
+import com.fiuni.sd.utils.Configuracion;
 
 @Service
 @Transactional
@@ -23,15 +26,27 @@ public class ValorReferenciaServiceImpl extends BaseServiceImpl<ValorReferenciaD
 	private IValorReferenciaDao valorReferenciaDao;
 	@Autowired
 	private IMetricaDao metricaDao;
+	
+	@Autowired
+	CacheManager cacheManager;
+	
+	@Autowired
+	Configuracion config;
 
 	@Override
 	public ValorReferenciaDTO save(ValorReferenciaDTO dto) {
 		final ValorReferenciaDomain domain = convertDtoToDomain(dto);
 		final ValorReferenciaDomain valorReferenciaDomain = valorReferenciaDao.save(domain);
-		return convertDomainToDto(valorReferenciaDomain);
+		ValorReferenciaDTO valorReferenciaDto = convertDomainToDto(valorReferenciaDomain);
+		if(null == valorReferenciaDto.getId()) {
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("valorReferenciaDomain", valorReferenciaDto.getId()), valorReferenciaDto);
+		}
+		
+		return valorReferenciaDto;
 	}
 
 	@Override
+	@Cacheable(value = "api_laboratorio_cache", key = "'api_valorReferenciaDomain' + #id")
 	public ValorReferenciaDTO getById(Integer id) {
 		final ValorReferenciaDomain valorReferenciaDomain = valorReferenciaDao.findById(id).get();
 		return convertDomainToDto(valorReferenciaDomain);
@@ -61,7 +76,12 @@ public class ValorReferenciaServiceImpl extends BaseServiceImpl<ValorReferenciaD
 	public ValorReferenciaResult getAll(Pageable pageable) {
 		final List<ValorReferenciaDTO> valoresReferencia = new ArrayList<>();
 		Page<ValorReferenciaDomain> resultados = valorReferenciaDao.findAll(pageable);
-		resultados.forEach(e -> valoresReferencia.add(convertDomainToDto(e)));
+		resultados.forEach(e -> {
+			ValorReferenciaDTO valorReferenciaDto = convertDomainToDto(e);
+			valoresReferencia.add(valorReferenciaDto);
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("valorReferenciaDomain", valorReferenciaDto.getId()), valorReferenciaDto);
+		});
+		
 		ValorReferenciaResult valorReferenciaResult = new ValorReferenciaResult();
 		valorReferenciaResult.setValorReferencia(valoresReferencia);
 		return valorReferenciaResult;
@@ -87,7 +107,7 @@ public class ValorReferenciaServiceImpl extends BaseServiceImpl<ValorReferenciaD
 
 	@Override
 	public String formatCacheKey(String domain, Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		String base = "api_";
+		return base + domain + "_" + id;
 	}
 }

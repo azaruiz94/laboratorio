@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.fiuni.sd.domain.tipo_analisis.TipoAnalisisDomain;
 import com.fiuni.sd.dto.tipo_analisis.TipoAnalisisDTO;
 import com.fiuni.sd.dto.tipo_analisis.TipoAnalisisResult;
 import com.fiuni.sd.service.base.BaseServiceImpl;
+import com.fiuni.sd.utils.Configuracion;
 
 @Service
 public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, TipoAnalisisDomain, TipoAnalisisResult> implements ITipoAnalisisService {
@@ -24,11 +27,17 @@ public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, Ti
 	public TipoAnalisisDTO save(TipoAnalisisDTO dto) {
 		final TipoAnalisisDomain domain = convertDtoToDomain(dto);
 		final TipoAnalisisDomain tipoAnalisisDomain = tipoAnalisisDao.save(domain);
-		return convertDomainToDto(tipoAnalisisDomain);
+		TipoAnalisisDTO tipoAnalisisDto = convertDomainToDto(tipoAnalisisDomain);
+		if(null == tipoAnalisisDto.getId()) {
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("tipoAnalisisDomain", tipoAnalisisDto.getId()), tipoAnalisisDto);
+		}
+		
+		return tipoAnalisisDto;
 	}
 
 	@Override
 	@Transactional
+	@Cacheable(value = "api_laboratorio_cache", key = "'api_tipoAnalisisDomain' + #id")
 	public TipoAnalisisDTO getById(Integer id) {
 		final TipoAnalisisDomain domain = tipoAnalisisDao.findById(id).get();
 		return convertDomainToDto(domain);
@@ -38,7 +47,11 @@ public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, Ti
 	public TipoAnalisisResult getAll(Pageable pageable) {
 		final List<TipoAnalisisDTO> tipos_analisis = new ArrayList<>();
 		Page<TipoAnalisisDomain> resultados = tipoAnalisisDao.findAll(pageable);
-		resultados.forEach(e -> tipos_analisis.add(convertDomainToDto(e)));
+		resultados.forEach(e -> {
+			TipoAnalisisDTO tipoAnalisisDto = convertDomainToDto(e);
+			tipos_analisis.add(tipoAnalisisDto);
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("tipoAnalisisDomain", tipoAnalisisDto.getId()), tipoAnalisisDto);
+		});
 		
 		TipoAnalisisResult tipoAnalisisResult = new TipoAnalisisResult();
 		tipoAnalisisResult.setTiposAnalisis(tipos_analisis);
@@ -67,6 +80,12 @@ public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, Ti
 	
 	@Autowired
 	private ITipoAnalisisDao tipoAnalisisDao;
+	
+	@Autowired
+	CacheManager cacheManager;
+	
+	@Autowired
+	Configuracion config;
 
 	@Override
 	public void delete(Integer id) {
@@ -93,7 +112,7 @@ public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, Ti
 
 	@Override
 	public String formatCacheKey(String domain, Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		String base = "api_";
+		return base + domain + "_" + id;
 	}
 }
