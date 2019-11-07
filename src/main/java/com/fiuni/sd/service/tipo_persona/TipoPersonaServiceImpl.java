@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.fiuni.sd.domain.tipo_persona.TipoPersonaDomain;
 import com.fiuni.sd.dto.tipo_persona.TipoPersonaDTO;
 import com.fiuni.sd.dto.tipo_persona.TipoPersonaResult;
 import com.fiuni.sd.service.base.BaseServiceImpl;
+import com.fiuni.sd.utils.Configuracion;
 
 @Service
 public class TipoPersonaServiceImpl extends BaseServiceImpl<TipoPersonaDTO, TipoPersonaDomain, TipoPersonaResult> implements ITipoPersonaService {
@@ -23,12 +26,18 @@ public class TipoPersonaServiceImpl extends BaseServiceImpl<TipoPersonaDTO, Tipo
 	@Transactional
 	public TipoPersonaDTO save(TipoPersonaDTO dto) {
 		final TipoPersonaDomain domain = convertDtoToDomain(dto);
-		final TipoPersonaDomain estadoDomain = tipoPersonaDao.save(domain);
-		return convertDomainToDto(estadoDomain);
+		final TipoPersonaDomain tipoPersonaDomain = tipoPersonaDao.save(domain);
+		TipoPersonaDTO tipoPersonaDto = convertDomainToDto(tipoPersonaDomain);
+		if(null == tipoPersonaDto.getId()) {
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("tipoPersonaDomain", tipoPersonaDto.getId()), tipoPersonaDto);
+		}
+		
+		return tipoPersonaDto;
 	}
 
 	@Override
 	@Transactional
+	@Cacheable(value = "api_laboratorio_cache", key = "'api_tipoPersonaDomain' + #id")
 	public TipoPersonaDTO getById(Integer id) {
 		final TipoPersonaDomain domain = tipoPersonaDao.findById(id).get();
 		return convertDomainToDto(domain);
@@ -38,8 +47,11 @@ public class TipoPersonaServiceImpl extends BaseServiceImpl<TipoPersonaDTO, Tipo
 	public TipoPersonaResult getAll(Pageable pageable) {
 		final List<TipoPersonaDTO> tipoPersonas = new ArrayList<>();
 		Page<TipoPersonaDomain> resultados = tipoPersonaDao.findAll(pageable);
-		resultados.forEach(e -> tipoPersonas.add(convertDomainToDto(e)));
-		
+		resultados.forEach(e ->{ 
+			TipoPersonaDTO tipoPersonaDto = convertDomainToDto(e);
+			tipoPersonas.add(tipoPersonaDto);
+		cacheManager.getCache(config.getCacheName()).put(formatCacheKey("tipoPersonaDomain", tipoPersonaDto.getId()), tipoPersonaDto);
+		});
 		TipoPersonaResult tipoPersonaResult = new TipoPersonaResult();
 		tipoPersonaResult.setTipoPersonas(tipoPersonas);
 		return tipoPersonaResult;
@@ -74,9 +86,20 @@ public class TipoPersonaServiceImpl extends BaseServiceImpl<TipoPersonaDTO, Tipo
 		domain.setDescripcion(dto.getDescripcion());
 		return domain;
 	}
+	
+	public String formatCacheKey(String domain, Integer id) {
+		String base = "api_";
+		return base + domain + "_" + id;
+	}
 
 	@Autowired
 	private ITipoPersonaDao tipoPersonaDao;
+	
+	@Autowired
+	CacheManager cacheManager;
+	
+	@Autowired
+	Configuracion config;
 
 	@Override
 	public TipoPersonaResult search(Pageable pageable, String texto) {

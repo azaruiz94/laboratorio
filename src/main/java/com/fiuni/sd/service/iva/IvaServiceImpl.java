@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.fiuni.sd.domain.iva.IvaDomain;
 import com.fiuni.sd.dto.iva.IvaDTO;
 import com.fiuni.sd.dto.iva.IvaResult;
 import com.fiuni.sd.service.base.BaseServiceImpl;
+import com.fiuni.sd.utils.Configuracion;
 
 
 @Service
@@ -25,11 +28,17 @@ public class IvaServiceImpl extends BaseServiceImpl<IvaDTO, IvaDomain, IvaResult
 	public IvaDTO save(IvaDTO dto) {
 		final IvaDomain domain = convertDtoToDomain(dto);
 		final IvaDomain ivaDomain = ivaDao.save(domain);
-		return convertDomainToDto(ivaDomain);
+		IvaDTO ivaDto = convertDomainToDto(ivaDomain);
+		if(null == ivaDto.getId()) {
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("ivaDomain", ivaDto.getId()), ivaDto);
+		}
+		
+		return ivaDto;
 	}
 
 	@Override
 	@Transactional
+	@Cacheable(value = "api_laboratorio_cache", key = "'api_ivaDomain' + #id")
 	public IvaDTO getById(Integer id) {
 		final IvaDomain domain = ivaDao.findById(id).get();
 		return convertDomainToDto(domain);
@@ -39,8 +48,11 @@ public class IvaServiceImpl extends BaseServiceImpl<IvaDTO, IvaDomain, IvaResult
 	public IvaResult getAll(Pageable pageable) {
 		final List<IvaDTO> ivas = new ArrayList<>();
 		Page<IvaDomain> resultados = ivaDao.findAll(pageable);
-		resultados.forEach(e -> ivas.add(convertDomainToDto(e)));
-		
+		resultados.forEach(e -> {
+			IvaDTO ivaDto = convertDomainToDto(e);
+			ivas.add(ivaDto);
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("ivaDomain", ivaDto.getId()), ivaDto);
+		});
 		IvaResult ivaResult = new IvaResult();
 		ivaResult.setIvas(ivas);
 		return ivaResult;
@@ -57,6 +69,11 @@ public class IvaServiceImpl extends BaseServiceImpl<IvaDTO, IvaDomain, IvaResult
 		domain.setValor(dto.getValor());
 		IvaDomain ivaActualizado = ivaDao.save(domain);
 		return convertDomainToDto(ivaActualizado);
+	}
+	
+	public String formatCacheKey(String domain, Integer id) {
+		String base = "api_";
+		return base + domain + "_" + id;
 	}
 	
 	@Override
@@ -77,6 +94,12 @@ public class IvaServiceImpl extends BaseServiceImpl<IvaDTO, IvaDomain, IvaResult
 
 	@Autowired
 	private IIvaDao ivaDao;
+	
+	@Autowired
+	CacheManager cacheManager;
+	
+	@Autowired
+	Configuracion config;
 
 	@Override
 	public IvaResult search(Pageable pageable, String texto) {
