@@ -94,6 +94,7 @@ public class SexoServiceImpl extends BaseServiceImpl<SexoDTO, SexoDomain, SexoRe
 		return domain;
 	}
 	
+	@Override
 	public String formatCacheKey(String domain, Integer id) {
 		String base = "api_";
 		return base + domain + "_" + id;

@@ -13,7 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>laboratorio</name>
 	<description>Proyecto en Spring Boot</description>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -89,6 +89,14 @@
 			<artifactId>spring-boot-starter-cache</artifactId>
 		</dependency>
 		
+	 
+		<dependency>
+   			<groupId>org.springframework.boot</groupId>
+   			<artifactId>spring-boot-starter-tomcat</artifactId>
+  			<scope>provided</scope>
+		</dependency>
+
+		
 	</dependencies>
 	
 	<build>
@@ -99,5 +107,7 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	
 
 </project>

@@ -89,6 +89,7 @@ public class PersonaServiceImpl extends BaseServiceImpl<PersonaDTO, PersonaDomai
 		return null;
 	}
   
+  	@Override
 	public String formatCacheKey(String domain, Integer id) {
 		String base = "api_";
 		return base + domain + "_" + id;

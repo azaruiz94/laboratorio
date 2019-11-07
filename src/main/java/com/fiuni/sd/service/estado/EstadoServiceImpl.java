@@ -87,6 +87,7 @@ public class EstadoServiceImpl extends BaseServiceImpl<EstadoDTO, EstadoDomain, 
 		return domain;
 	}
 	
+	@Override
 	public String formatCacheKey(String domain, Integer id) {
 		String base = "api_";
 		return base + domain + "_" + id;

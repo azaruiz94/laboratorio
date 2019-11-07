@@ -90,4 +90,10 @@ public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, Ti
 		tipoAnalisisResult.setTiposAnalisis(tipos_analisis);
 		return tipoAnalisisResult;
 	}
+
+	@Override
+	public String formatCacheKey(String domain, Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
