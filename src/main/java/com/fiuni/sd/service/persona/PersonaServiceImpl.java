@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.fiuni.sd.domain.persona.PersonaDomain;
 import com.fiuni.sd.dto.persona.PersonaDTO;
 import com.fiuni.sd.dto.persona.PersonaResult;
 import com.fiuni.sd.service.base.BaseServiceImpl;
+import com.fiuni.sd.utils.Configuracion;
 
 
 @Service
@@ -25,11 +28,17 @@ public class PersonaServiceImpl extends BaseServiceImpl<PersonaDTO, PersonaDomai
 	public PersonaDTO save(PersonaDTO dto) {
 		final PersonaDomain domain = convertDtoToDomain(dto);
 		final PersonaDomain personaDomain = personaDao.save(domain);
-		return convertDomainToDto(personaDomain);
+		PersonaDTO personaDto = convertDomainToDto(personaDomain);
+		if(null == personaDto.getId()) {
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("personaDomain", personaDto.getId()), personaDto);
+		}
+		
+		return personaDto;
 	}
 
 	@Override
 	@Transactional
+	@Cacheable(value = "api_laboratorio_cache", key = "'api_PersonaDomain' + #id")
 	public PersonaDTO getById(Integer id) {
 		final PersonaDomain domain = personaDao.findById(id).get();
 		return convertDomainToDto(domain);
@@ -39,8 +48,11 @@ public class PersonaServiceImpl extends BaseServiceImpl<PersonaDTO, PersonaDomai
 	public PersonaResult getAll(Pageable pageable) {
 		final List<PersonaDTO> personas = new ArrayList<>();
 		Page<PersonaDomain> resultados = personaDao.findAll(pageable);
-		resultados.forEach(e -> personas.add(convertDomainToDto(e)));
-		
+		resultados.forEach(e -> {
+			PersonaDTO personaDto = convertDomainToDto(e);
+			personas.add(personaDto);
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("personaDomain", personaDto.getId()), personaDto);
+		});
 		PersonaResult personaResult = new PersonaResult();
 		personaResult.setPersonas(personas);
 		return personaResult;
@@ -75,6 +87,11 @@ public class PersonaServiceImpl extends BaseServiceImpl<PersonaDTO, PersonaDomai
 	public PersonaResult search(Pageable pageable, String texto) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+  
+	public String formatCacheKey(String domain, Integer id) {
+		String base = "api_";
+		return base + domain + "_" + id;
 	}
 	
 	@Override
@@ -114,4 +131,10 @@ public class PersonaServiceImpl extends BaseServiceImpl<PersonaDTO, PersonaDomai
 
 	@Autowired
 	private IPersonaDao personaDao;	
+	
+	@Autowired
+	CacheManager cacheManager;
+	
+	@Autowired
+	Configuracion config;
 }

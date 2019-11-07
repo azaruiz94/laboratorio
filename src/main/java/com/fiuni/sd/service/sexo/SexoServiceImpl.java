@@ -47,7 +47,11 @@ public class SexoServiceImpl extends BaseServiceImpl<SexoDTO, SexoDomain, SexoRe
 	public SexoResult getAll(Pageable pageable) {
 		final List<SexoDTO> sexos = new ArrayList<>();
 		Page<SexoDomain> resultados = sexoDao.findAll(pageable);
-		resultados.forEach(e -> sexos.add(convertDomainToDto(e)));
+		resultados.forEach(e -> {
+			SexoDTO sexoDto = convertDomainToDto(e);
+			sexos.add(sexoDto);
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("sexoDomain", sexoDto.getId()), sexoDto);
+		});
 		
 		SexoResult sexoResult = new SexoResult();
 		sexoResult.setSexos(sexos);
