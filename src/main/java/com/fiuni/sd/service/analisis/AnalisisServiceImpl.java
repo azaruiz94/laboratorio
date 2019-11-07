@@ -80,5 +80,11 @@ public class AnalisisServiceImpl extends BaseServiceImpl<AnalisisDTO, AnalisisDo
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String formatCacheKey(String domain, Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

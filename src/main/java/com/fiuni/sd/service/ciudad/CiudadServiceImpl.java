@@ -83,4 +83,10 @@ public class CiudadServiceImpl extends BaseServiceImpl<CiudadDTO, CiudadDomain, 
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String formatCacheKey(String domain, Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

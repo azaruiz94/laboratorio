@@ -71,6 +71,7 @@ public class IvaServiceImpl extends BaseServiceImpl<IvaDTO, IvaDomain, IvaResult
 		return convertDomainToDto(ivaActualizado);
 	}
 	
+	@Override
 	public String formatCacheKey(String domain, Integer id) {
 		String base = "api_";
 		return base + domain + "_" + id;

@@ -87,6 +87,7 @@ public class TipoPersonaServiceImpl extends BaseServiceImpl<TipoPersonaDTO, Tipo
 		return domain;
 	}
 	
+	@Override
 	public String formatCacheKey(String domain, Integer id) {
 		String base = "api_";
 		return base + domain + "_" + id;

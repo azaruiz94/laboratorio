@@ -82,5 +82,11 @@ public class MetricaServiceImpl extends BaseServiceImpl<MetricaDTO, MetricaDomai
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String formatCacheKey(String domain, Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

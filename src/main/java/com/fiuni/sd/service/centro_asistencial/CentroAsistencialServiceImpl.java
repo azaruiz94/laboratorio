@@ -81,5 +81,11 @@ public class CentroAsistencialServiceImpl extends BaseServiceImpl<CentroAsistenc
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String formatCacheKey(String domain, Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

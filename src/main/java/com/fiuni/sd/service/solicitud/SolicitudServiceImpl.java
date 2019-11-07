@@ -90,4 +90,10 @@ public class SolicitudServiceImpl extends BaseServiceImpl<SolicitudDTO, Solicitu
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String formatCacheKey(String domain, Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
