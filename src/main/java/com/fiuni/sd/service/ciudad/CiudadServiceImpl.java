@@ -3,6 +3,8 @@ package com.fiuni.sd.service.ciudad;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.fiuni.sd.domain.ubicacion.ciudad.CiudadDomain;
 import com.fiuni.sd.dto.ubicacion.ciudad.CiudadDTO;
 import com.fiuni.sd.dto.ubicacion.ciudad.CiudadResult;
 import com.fiuni.sd.service.base.BaseServiceImpl;
+import com.fiuni.sd.utils.Configuracion;
 
 @Service
 public class CiudadServiceImpl extends BaseServiceImpl<CiudadDTO, CiudadDomain,  CiudadResult> implements ICiudadService {
@@ -21,17 +24,28 @@ public class CiudadServiceImpl extends BaseServiceImpl<CiudadDTO, CiudadDomain, 
 	@Autowired
 	private IDepartamentoDao departamentoDao;
 	
+	@Autowired
+	CacheManager cacheManager;
+	
+	@Autowired
+	Configuracion config;
 	
 	@Override
 	@Transactional
 	public CiudadDTO save(CiudadDTO dto) {
 		final CiudadDomain domain = convertDtoToDomain(dto);
 		final CiudadDomain ciudadDomain = ciudadDao.save(domain);
-		return convertDomainToDto(ciudadDomain);
+		CiudadDTO ciudadDto = convertDomainToDto(ciudadDomain);
+		if(null == ciudadDto.getId()) {
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("ciudadDomain", ciudadDto.getId()), ciudadDto);
+		}
+		
+		return ciudadDto;
 	}
 
 	@Override
 	@Transactional
+	@Cacheable(value = "api_laboratorio_cache", key = "'api_ciudadDomain' + #id")
 	public CiudadDTO getById(Integer id) {
 		final CiudadDomain domain = ciudadDao.findById(id).get();
 		return convertDomainToDto(domain);
@@ -60,7 +74,11 @@ public class CiudadServiceImpl extends BaseServiceImpl<CiudadDTO, CiudadDomain, 
 	public CiudadResult getAll(org.springframework.data.domain.Pageable pageable) {
 		final List<CiudadDTO> ciudades = new ArrayList<>();
 		Page<CiudadDomain> resultados = ciudadDao.findAll(pageable);
-		resultados.forEach(e -> ciudades.add(convertDomainToDto(e)));
+		resultados.forEach(e -> {
+			CiudadDTO ciudadDto = convertDomainToDto(e);
+			ciudades.add(ciudadDto);
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("ciudadDomain", ciudadDto.getId()), ciudadDto);
+		});
 		CiudadResult ciudadResult = new CiudadResult();
 		ciudadResult.setCiudades(ciudades);
 		return ciudadResult;
@@ -86,7 +104,7 @@ public class CiudadServiceImpl extends BaseServiceImpl<CiudadDTO, CiudadDomain, 
 
 	@Override
 	public String formatCacheKey(String domain, Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		String base = "api_";
+		return base + domain + "_" + id;
 	}
 }

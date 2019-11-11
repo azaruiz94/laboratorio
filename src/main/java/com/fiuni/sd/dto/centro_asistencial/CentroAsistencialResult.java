@@ -12,11 +12,11 @@ public class CentroAsistencialResult extends BaseResult<CentroAsistencialDTO>{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public List<CentroAsistencialDTO> getTiposAnalisis(){
+	public List<CentroAsistencialDTO> getCentroAsistenciales(){
 		return getList();
 	}
 	
-	public void setTiposAnalisis(List<CentroAsistencialDTO> dtos) {
+	public void setCentroAsistenciales(List<CentroAsistencialDTO> dtos) {
 		super.setList(dtos);
 	}
 	
