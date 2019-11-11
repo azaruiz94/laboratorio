@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.fiuni.sd.dao.ubicacion.pais.IPaisDao;
+
 import com.fiuni.sd.dao.ubicacion.departamento.IDepartamentoDao;
+import com.fiuni.sd.dao.ubicacion.pais.IPaisDao;
 import com.fiuni.sd.domain.ubicacion.departamento.DepartamentoDomain;
 import com.fiuni.sd.dto.ubicacion.departamento.DepartamentoDTO;
 import com.fiuni.sd.dto.ubicacion.departamento.DepartamentoResult;
 import com.fiuni.sd.service.base.BaseServiceImpl;
+import com.fiuni.sd.utils.Configuracion;
 
 @Service
 @Transactional
@@ -23,14 +27,26 @@ public class DepartamentoServiceImpl extends BaseServiceImpl<DepartamentoDTO, De
 	@Autowired
 	private IPaisDao paisDao;
 
+	@Autowired
+	CacheManager cacheManager;
+	
+	@Autowired
+	Configuracion config;
+
 	@Override
 	public DepartamentoDTO save(DepartamentoDTO dto) {
 		final DepartamentoDomain domain = convertDtoToDomain(dto);
 		final DepartamentoDomain departamentoDomain = departamentoDao.save(domain);
-		return convertDomainToDto(departamentoDomain);
+		DepartamentoDTO departamentoDto = convertDomainToDto(departamentoDomain);
+		if(null == departamentoDto.getId()) {
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("departamentoDomain", departamentoDto.getId()), departamentoDto);
+		}
+		
+		return departamentoDto;
 	}
 
 	@Override
+	@Cacheable(value = "api_laboratorio_cache", key = "'api_departamentoDomain' + #id")
 	public DepartamentoDTO getById(Integer id) {
 		final DepartamentoDomain departamentoDomain = departamentoDao.findById(id).get();
 		return convertDomainToDto(departamentoDomain);
@@ -70,7 +86,11 @@ public class DepartamentoServiceImpl extends BaseServiceImpl<DepartamentoDTO, De
 	public DepartamentoResult getAll(Pageable pageable) {
 		final List<DepartamentoDTO> departamentos = new ArrayList<>();
 		Page<DepartamentoDomain> resultados = departamentoDao.findAll(pageable);
-		resultados.forEach(e -> departamentos.add(convertDomainToDto(e)));
+		resultados.forEach(e -> {
+			DepartamentoDTO departamentoDto = convertDomainToDto(e);
+			departamentos.add(departamentoDto);
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("departamentoDomain", departamentoDto.getId()), departamentoDto);
+		});
 		DepartamentoResult departamentoResult = new DepartamentoResult();
 		departamentoResult.setDepartamentos(departamentos);
 		return departamentoResult;
@@ -96,7 +116,7 @@ public class DepartamentoServiceImpl extends BaseServiceImpl<DepartamentoDTO, De
 
 	@Override
 	public String formatCacheKey(String domain, Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		String base = "api_";
+		return base + domain + "_" + id;
 	}
 }

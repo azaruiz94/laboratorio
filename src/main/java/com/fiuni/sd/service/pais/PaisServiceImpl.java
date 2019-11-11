@@ -4,31 +4,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.fiuni.sd.dao.ubicacion.pais.IPaisDao;
 import com.fiuni.sd.domain.ubicacion.pais.PaisDomain;
 import com.fiuni.sd.dto.ubicacion.pais.PaisDTO;
 import com.fiuni.sd.dto.ubicacion.pais.PaisResult;
 import com.fiuni.sd.service.base.BaseServiceImpl;
+import com.fiuni.sd.utils.Configuracion;
 
 @Service
 public class PaisServiceImpl extends BaseServiceImpl<PaisDTO, PaisDomain, PaisResult> implements IPaisService {
 	@Autowired
 	private IPaisDao paisDao;
 
+	@Autowired
+	CacheManager cacheManager;
+	
+	@Autowired
+	Configuracion config;
+
 	@Override
 	@Transactional
 	public PaisDTO save(PaisDTO dto) {
 		final PaisDomain domain = convertDtoToDomain(dto);
 		final PaisDomain paisDomain = paisDao.save(domain);
-		return convertDomainToDto(paisDomain);
+		PaisDTO paisDto = convertDomainToDto(paisDomain);
+		if(null == paisDto.getId()) {
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("paisDomain", paisDto.getId()), paisDto);
+		}
+		
+		return paisDto;
 	}
 
 	@Override
 	@Transactional
+	@Cacheable(value = "api_laboratorio_cache", key = "'api_paisDomain' + #id")
 	public PaisDTO getById(Integer id) {
 		final PaisDomain domain = paisDao.findById(id).get();
 		return convertDomainToDto(domain);
@@ -63,7 +79,12 @@ public class PaisServiceImpl extends BaseServiceImpl<PaisDTO, PaisDomain, PaisRe
 	public PaisResult getAll(Pageable pageable) {
 		final List<PaisDTO> paises = new ArrayList<>();
 		Page<PaisDomain> resultados = paisDao.findAll(pageable);
-		resultados.forEach(e -> paises.add(convertDomainToDto(e)));
+		resultados.forEach(e -> {
+			PaisDTO paisDto = convertDomainToDto(e);
+			paises.add(paisDto);
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("paisDomain", paisDto.getId()), paisDto);
+		});
+		
 		PaisResult paisResult = new PaisResult();
 		paisResult.setPaises(paises);
 		return paisResult;
@@ -89,7 +110,7 @@ public class PaisServiceImpl extends BaseServiceImpl<PaisDTO, PaisDomain, PaisRe
 
 	@Override
 	public String formatCacheKey(String domain, Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		String base = "api_";
+		return base + domain + "_" + id;
 	}
 }

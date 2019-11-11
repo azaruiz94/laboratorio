@@ -103,7 +103,11 @@ public class TipoAnalisisServiceImpl extends BaseServiceImpl<TipoAnalisisDTO, Ti
 	public TipoAnalisisResult search(Pageable pageable, String texto) {
 		final List<TipoAnalisisDTO> tipos_analisis = new ArrayList<>();
 		Page<TipoAnalisisDomain> resultados = tipoAnalisisDao.search(pageable, texto);
-		resultados.forEach(e -> tipos_analisis.add(convertDomainToDto(e)));
+		resultados.forEach(e -> {
+			TipoAnalisisDTO tipoAnalisisDto = convertDomainToDto(e);
+			tipos_analisis.add(tipoAnalisisDto);
+			cacheManager.getCache(config.getCacheName()).put(formatCacheKey("tipoAnalisisDomain", tipoAnalisisDto.getId()), tipoAnalisisDto);
+		});
 		
 		TipoAnalisisResult tipoAnalisisResult = new TipoAnalisisResult();
 		tipoAnalisisResult.setTiposAnalisis(tipos_analisis);
