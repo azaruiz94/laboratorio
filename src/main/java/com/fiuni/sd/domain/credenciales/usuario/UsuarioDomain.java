@@ -1,16 +1,16 @@
 package com.fiuni.sd.domain.credenciales.usuario;
 
-//import java.util.Set;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-//import javax.persistence.FetchType;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-//import javax.persistence.JoinColumn;
-//import javax.persistence.JoinTable;
-//import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -18,6 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.fiuni.sd.domain.base.BaseDomain;
+import com.fiuni.sd.domain.credenciales.rol.RolDomain;
 //import com.fiuni.sd.domain.credenciales.rol.RolDomain;
 import com.fiuni.sd.domain.estado.EstadoDomain;
 import com.fiuni.sd.domain.persona.PersonaDomain;
@@ -44,9 +45,9 @@ public class UsuarioDomain implements BaseDomain {
 	@Transient
 	private String _confirmPassword;
 
-	/*@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "rol_usuario", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
-	private Set<RolDomain> _roles;*/
+	private Set<RolDomain> _roles;
 
 	public Integer getId() {
 		return _id;
@@ -101,13 +102,13 @@ public class UsuarioDomain implements BaseDomain {
 		this._confirmPassword = confirmPassword;
 	}
 
-	/*public Set<RolDomain> getRoles() {
+	public Set<RolDomain> getRoles() {
 		return _roles;
 	}
 
 	public void setRoles(Set<RolDomain> roles) {
 		this._roles = roles;
-	}*/
+	}
 
 	@Override
 	public String toString() {
