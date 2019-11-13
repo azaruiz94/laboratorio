@@ -1,23 +1,24 @@
 package com.fiuni.sd.domain.credenciales.usuario;
 
-import java.util.Set;
+//import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+//import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.JoinTable;
+//import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.fiuni.sd.domain.base.BaseDomain;
-import com.fiuni.sd.domain.credenciales.rol.RolDomain;
+//import com.fiuni.sd.domain.credenciales.rol.RolDomain;
 import com.fiuni.sd.domain.estado.EstadoDomain;
 import com.fiuni.sd.domain.persona.PersonaDomain;
 
@@ -84,7 +85,12 @@ public class UsuarioDomain implements BaseDomain {
 	}
 
 	public void setPassword(String password) {
-		this._password = password;
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		if(encoder.matches(password, _password)) {
+			this._password = password;
+		}else {
+			this._password = encoder.encode(password);
+		}
 	}
 
 	public String getConfirmPassword() {
