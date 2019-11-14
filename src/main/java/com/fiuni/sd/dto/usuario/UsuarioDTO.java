@@ -1,13 +1,16 @@
 package com.fiuni.sd.dto.usuario;
+import java.util.Set;
+
 import com.fiuni.sd.dto.base.BaseDTO;
 
 public class UsuarioDTO extends BaseDTO {
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 1L;	
+	
 	private String _nombre;
-	private Integer _persona;
-	private Integer _estado;
+	private Integer _personaId;
+	private Integer _estadoId;
 	private String _password;
+	private Set<Integer> rolesIds;
 
 	public String getNombre() {
 		return _nombre;
@@ -18,19 +21,19 @@ public class UsuarioDTO extends BaseDTO {
 	}
 
 	public Integer getPersonaId() {
-		return _persona;
+		return _personaId;
 	}
 
 	public void setPersonaID(Integer persona) {
-		this._persona = persona;
+		this._personaId = persona;
 	}
 	
 	public Integer getEstadoId() {
-		return _estado;
+		return _estadoId;
 	}
 
 	public void setEstadoId(Integer estado) {
-		this._estado = estado;
+		this._estadoId = estado;
 	}
 
 	public String getPassword() {
@@ -39,6 +42,14 @@ public class UsuarioDTO extends BaseDTO {
 
 	public void setPassword(String password) {
 		this._password = password;
+	}
+
+	public Set<Integer> getRolesIds() {
+		return rolesIds;
+	}
+
+	public void setRolesIds(Set<Integer> rolesIds) {
+		this.rolesIds = rolesIds;
 	}
 
 }

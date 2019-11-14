@@ -3,15 +3,11 @@ package com.fiuni.sd.domain.credenciales.rol;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import com.fiuni.sd.domain.base.BaseDomain;
@@ -30,15 +26,8 @@ public class RolDomain implements BaseDomain{
 	@Column(name = "rol", nullable = false, length = 50, unique = true)
 	private String _rol;
 	
-	@ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            })
-    @JoinTable(name = "rol_usuario",
-            joinColumns = { @JoinColumn(name = "rol_id") },
-            inverseJoinColumns = { @JoinColumn(name = "usuario_id") })
-    private Set<UsuarioDomain> usuarios = new HashSet<>();
+	@ManyToMany(mappedBy = "_roles")
+    private Set<UsuarioDomain> _usuariosIds = new HashSet<>();
 	
 	public Integer getId() {
 		return _id;
@@ -55,4 +44,14 @@ public class RolDomain implements BaseDomain{
 	public void setRol(String _rol) {
 		this._rol = _rol;
 	}
+	
+
+	public Set<UsuarioDomain> getUsuarioIds() {
+		return _usuariosIds;
+	}
+
+	public void setUsuarioIds(Set<UsuarioDomain> usuarioIds) {
+		this._usuariosIds = usuarioIds;
+	}	
+	
 }
