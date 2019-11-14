@@ -1,7 +1,9 @@
 package com.fiuni.sd.service.rol;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -12,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fiuni.sd.dao.rol.IRolDao;
+import com.fiuni.sd.dao.usuario.IUsuarioDao;
 import com.fiuni.sd.domain.credenciales.rol.RolDomain;
+import com.fiuni.sd.domain.credenciales.usuario.UsuarioDomain;
 import com.fiuni.sd.dto.rol.RolDTO;
 import com.fiuni.sd.dto.rol.RolResult;
 import com.fiuni.sd.service.base.BaseServiceImpl;
@@ -62,9 +66,19 @@ public class RolServiceImpl extends BaseServiceImpl<RolDTO, RolDomain, RolResult
 		rolDao.deleteById(id);
 	}
 	
+	@Override
 	public RolDTO update(Integer id, RolDTO dto) {
 		RolDomain domain = rolDao.findById(id).get();
+		Set<UsuarioDomain> usuarioIds = new HashSet<>();
+		
 		domain.setId(dto.getId());
+		domain.setRol(dto.getRol());
+		
+		for (Integer e : dto.getUsuarioIds()) {
+			usuarioIds.add(usuarioDao.findById(e).get());
+		}
+		domain.setUsuarioIds(usuarioIds);
+		
 		RolDomain rolActualizado = rolDao.save(domain);
 		return convertDomainToDto(rolActualizado);
 	}
@@ -72,14 +86,32 @@ public class RolServiceImpl extends BaseServiceImpl<RolDTO, RolDomain, RolResult
 	@Override
 	protected RolDTO convertDomainToDto(RolDomain domain) {
 		final RolDTO dto = new RolDTO();
+		Set<Integer> usuarioIds = new HashSet<>();
+		
 		dto.setId(domain.getId());
+		dto.setRol(domain.getRol());
+		
+		for (UsuarioDomain e : domain.getUsuarioIds()) {
+			usuarioIds.add(e.getId());
+		}
+		
+		dto.setUsuarioIds(usuarioIds);
 		return dto;
 	}
 
 	@Override
 	protected RolDomain convertDtoToDomain(RolDTO dto) {
 		final RolDomain domain = new RolDomain();
+		Set<UsuarioDomain> usuarioIds = new HashSet<>();
+		
 		domain.setId(dto.getId());
+		domain.setRol(dto.getRol());
+		
+		for (Integer e : dto.getUsuarioIds()) {
+			usuarioIds.add(usuarioDao.findById(e).get());
+		}
+		domain.setUsuarioIds(usuarioIds);
+		
 		return domain;
 	}
 	
@@ -88,19 +120,22 @@ public class RolServiceImpl extends BaseServiceImpl<RolDTO, RolDomain, RolResult
 		String base = "api_";
 		return base + domain + "_" + id;
 	}
+	
+	@Override
+	public RolResult search(Pageable pageable, String texto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Autowired
 	private IRolDao rolDao;
+	
+	@Autowired
+	private IUsuarioDao usuarioDao;
 	
 	@Autowired
 	CacheManager cacheManager;
 	
 	@Autowired
 	Configuracion config;
-
-	@Override
-	public RolResult search(Pageable pageable, String texto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
